@@ -36,7 +36,7 @@ public interface UserDao {
     LiveData<UserEntity> getUserById(long id);
 
     @Query("SELECT * FROM users WHERE userName = :username AND password = :password")
-    LiveData<UserEntity> getUserByUserAndPass(String username, String password);
+    LiveData<UserEntity> getAccount(String username, String password);
 
     @Insert
     void insertUser(UserEntity userEntity);

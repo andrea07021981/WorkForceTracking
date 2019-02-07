@@ -32,6 +32,7 @@ public class DataGenerator {
             UserEntity user = new UserEntity(
                     USER_NAME[i],
                     USER_SURNAME[i],
+                    USER_USERNAME[i],
                     USER_EMAIL[i],
                     USER_PSW[i],
                     new Date());

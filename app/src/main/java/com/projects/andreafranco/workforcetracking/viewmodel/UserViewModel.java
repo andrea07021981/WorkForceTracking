@@ -12,13 +12,12 @@ import com.projects.andreafranco.workforcetracking.BasicApp;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import com.projects.andreafranco.workforcetracking.repository.DataRepository;
 
-import java.util.List;
-
 public class UserViewModel extends AndroidViewModel {
 
+    //TODO USE THIS MODEL FOR EDIT/VIEW USER PROFILE IN FRAGMENT
     private final LiveData<UserEntity> mObservableUser;
 
-    public ObservableField<UserEntity> user = new ObservableField<>();
+    public ObservableField<UserEntity> mUser = new ObservableField<>();
 
     private final long mUserId;
     private final DataRepository mRepository;
@@ -31,10 +30,21 @@ public class UserViewModel extends AndroidViewModel {
         mObservableUser = repository.getUserById(mUserId);
     }
 
+    public void setUser(UserEntity user) {
+        this.mUser.set(user);
+    }
+
     public void createUser(UserEntity user) {
         mRepository.insertUser(user);
     }
 
+    public void getUser(UserEntity user) {
+        mRepository.getUserById(user.getId());
+    }
+
+    public LiveData<UserEntity> checkValidLogin(String username, String password) {
+        return mRepository.isValidAccount(username, password);
+    }
     /**
      * Expose the LiveData Comments query so the UI can observe it.
      */

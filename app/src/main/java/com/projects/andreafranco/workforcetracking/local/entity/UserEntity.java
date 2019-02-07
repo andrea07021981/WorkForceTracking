@@ -42,9 +42,10 @@ public class UserEntity implements User {
     private Date updatedAt;
 
     @Ignore
-    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, Date updatedAt) {
         this.name = name;
         this.surname = surname;
+        this.userName= username;
         this.email = email;
         this.password = password;
         this.updatedAt = updatedAt;

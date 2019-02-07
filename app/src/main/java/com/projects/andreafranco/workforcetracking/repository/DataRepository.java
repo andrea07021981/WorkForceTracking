@@ -2,6 +2,7 @@ package com.projects.andreafranco.workforcetracking.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.support.annotation.NonNull;
 
 import com.projects.andreafranco.workforcetracking.AppExecutors;
 import com.projects.andreafranco.workforcetracking.local.AppDatabase;
@@ -42,7 +43,7 @@ public class DataRepository {
     }
 
     /**
-     * Get the list of products from the database and get notified when the data changes.
+     * Get the list of users from the database and get notified when the data changes.
      */
     public LiveData<List<UserEntity>> getUsers() {
         return mObservableUsers;
@@ -50,6 +51,11 @@ public class DataRepository {
 
     public LiveData<UserEntity> getUserById(final long userId) {
         return mDatabase.userDao().getUserById(userId);
+    }
+
+    @NonNull
+    public LiveData<UserEntity> isValidAccount(@NonNull String username, @NonNull String password) {
+        return mDatabase.userDao().getAccount(username, password);
     }
 
     public void insertUser(UserEntity userEntity)
