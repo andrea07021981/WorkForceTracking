@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -31,7 +32,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -63,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mLoginFormView;
     private AlertDialog mAlertDialog;
+    private UserViewModel mUserViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +102,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mAlertDialog = new AlertDialog.Builder(this)
                 .setView(LayoutInflater.from(this).inflate(R.layout.progress_dialog, null))
                 .create();
+
+        UserViewModel.Factory factory = new UserViewModel.Factory(getApplication(), -1L);
+        mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+
     }
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -282,6 +293,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
+    }
+
+    public void clickLogIn(View view) {
+        UserEntity user = new UserEntity("","","","",new Date());
+        mUserViewModel.createUser(user);
     }
 
 

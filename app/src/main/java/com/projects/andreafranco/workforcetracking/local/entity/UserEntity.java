@@ -1,4 +1,4 @@
-package com.projects.andreafranco.workforcetracking.local;
+package com.projects.andreafranco.workforcetracking.local.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -6,34 +6,43 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+import com.projects.andreafranco.workforcetracking.model.User;
+
 import java.util.Date;
 
-@Entity(tableName = "user")
-public class UserEntry {
+@Entity(tableName = "users")
+public class UserEntity implements User {
 
     @PrimaryKey
+    @SerializedName("id")
     private long id;
 
     @NonNull
+    @SerializedName("name")
     private String name;
 
     @NonNull
+    @SerializedName("surname")
     private String surname;
 
     @NonNull
+    @SerializedName("email")
     private String email;
 
     @NonNull
+    @SerializedName("userName")
     private String userName;
 
     @NonNull
+    @SerializedName("password")
     private String password;
 
     @ColumnInfo(name="update_at")
     private Date updatedAt;
 
     @Ignore
-    public UserEntry(@NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -41,7 +50,7 @@ public class UserEntry {
         this.updatedAt = updatedAt;
     }
 
-    public UserEntry(long id, @NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(long id, @NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -50,6 +59,7 @@ public class UserEntry {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -58,6 +68,7 @@ public class UserEntry {
         this.id = id;
     }
 
+    @Override
     @NonNull
     public String getName() {
         return name;
@@ -67,6 +78,7 @@ public class UserEntry {
         this.name = name;
     }
 
+    @Override
     @NonNull
     public String getSurname() {
         return surname;
@@ -76,6 +88,7 @@ public class UserEntry {
         this.surname = surname;
     }
 
+    @Override
     @NonNull
     public String getEmail() {
         return email;
@@ -85,6 +98,7 @@ public class UserEntry {
         this.email = email;
     }
 
+    @Override
     @NonNull
     public String getPassword() {
         return password;
@@ -94,6 +108,7 @@ public class UserEntry {
         this.password = password;
     }
 
+    @Override
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -102,6 +117,7 @@ public class UserEntry {
         this.updatedAt = updatedAt;
     }
 
+    @Override
     @NonNull
     public String getUserName() {
         return userName;

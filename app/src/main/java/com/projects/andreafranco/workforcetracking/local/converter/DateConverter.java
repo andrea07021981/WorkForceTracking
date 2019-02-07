@@ -1,4 +1,4 @@
-package com.projects.andreafranco.workforcetracking.local;
+package com.projects.andreafranco.workforcetracking.local.converter;
 
 import android.arch.persistence.room.TypeConverter;
 
