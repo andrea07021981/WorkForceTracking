@@ -1,9 +1,11 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +28,7 @@ import java.util.Objects;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class LoginFragment extends Fragment{
 
     // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
@@ -73,9 +75,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         mLoginButton = view.findViewById(R.id.login_button);
-        mLoginButton.setOnClickListener(this);
+        mLoginButton.setOnClickListener(this::checkLogin);
         mSignUpTextView = view.findViewById(R.id.signup_textview);
-        mSignUpTextView.setOnClickListener(this);
+        mSignUpTextView.setOnClickListener(this::doSignUp);
         mUsernameEditText = view.findViewById(R.id.username_edittext);
         mPasswordEditText = view.findViewById(R.id.password_edittext);
 
@@ -100,12 +102,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -123,50 +119,46 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         mListener = null;
     }
 
-    @Override
-    public void onClick(View v) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
-        assert inputMethodManager != null;
-        if (inputMethodManager.isActive()) inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(), 0);
-        int id = v.getId();
-        switch (id) {
-
-            case R.id.login_button:
-                if (TextUtils.isEmpty(mUsernameEditText.getText()) ||
-                        TextUtils.isEmpty(mPasswordEditText.getText())) {
-                    Toast.makeText(getActivity(), "Username and password required", Toast.LENGTH_SHORT).show();
-                } else {
-                    doLogin(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
-                }
-                break;
-
-            case R.id.signup_textview:
-                doSignUp();
-                break;
-
-            default:
-                break;
+    private void checkLogin(View view) {
+        if (TextUtils.isEmpty(mUsernameEditText.getText()) ||
+                TextUtils.isEmpty(mPasswordEditText.getText())) {
+            Toast.makeText(getActivity(), "Username and password required", Toast.LENGTH_SHORT).show();
+        } else {
+            doLogin(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
         }
     }
 
-    private void doLogin(String username, String password) {
-        //mAlertDialog.show();
+    public void doLogin(String username, String password) {
+        closeKeyBoard();
+        mAlertDialog.show();
         mUserViewModel.checkValidLogin(username, password).observe(this, new Observer<UserEntity>() {
             @Override
             public void onChanged(@Nullable UserEntity userEntity) {
                 if (userEntity != null) {
-                    //TODO login ok
+                    //TODO
+                    //TODO in XXX activity set the style AppThemeExplode
+                    /*ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
+                    Intent intent = new Intent(getActivity(), "XXX not defined");
+                    startActivity(intent, options.toBundle());
+                    mListener.onStartNewActivity(intent);*/
                     Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
                 }
-                //mAlertDialog.dismiss();
+                mAlertDialog.dismiss();
             }
         });
     }
 
-    private void doSignUp() {
+    public void doSignUp(View view) {
+        closeKeyBoard();
+        mListener.onReplaceFragment();
+    }
 
+    private void closeKeyBoard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        if (inputMethodManager.isActive()) inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(), 0);
     }
 
     /**
@@ -180,6 +172,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnLoginFragmentInteractionListener {
-        void onFragmentInteraction();
+        void onReplaceFragment();
+        void onStartNewActivity(Intent intent);
     }
 }

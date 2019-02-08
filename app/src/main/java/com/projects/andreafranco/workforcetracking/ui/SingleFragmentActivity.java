@@ -12,7 +12,7 @@ import com.projects.andreafranco.workforcetracking.R;
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 
     @LayoutRes
-    protected int getLayoutResId(){
+    protected int getLayoutResId() {
         return R.layout.activity_fragment;
     }
 
@@ -31,4 +31,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     }
 
     protected abstract Fragment createFragment();
+
+    protected abstract void setupToolbar(boolean visible);
 }
