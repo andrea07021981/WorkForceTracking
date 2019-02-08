@@ -1,4 +1,4 @@
-package com.projects.andreafranco.workforcetracking;
+package com.projects.andreafranco.workforcetracking.db;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;

@@ -150,16 +150,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
     private void doLogin(String username, String password) {
-        mAlertDialog.show();
+        //mAlertDialog.show();
         mUserViewModel.checkValidLogin(username, password).observe(this, new Observer<UserEntity>() {
             @Override
             public void onChanged(@Nullable UserEntity userEntity) {
                 if (userEntity != null) {
-                    //TODO move ahead
+                    //TODO login ok
+                    Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
                 }
-                mAlertDialog.dismiss();
+                //mAlertDialog.dismiss();
             }
         });
     }
