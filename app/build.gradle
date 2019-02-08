@@ -57,7 +57,10 @@ dependencies {
 
     // Room DB
     implementation "android.arch.persistence.room:runtime:${roomVersion}"
-    annotationProcessor "android.arch.persistence.room:compiler:${roomVersion}"
+    implementation 'org.projectlombok:lombok:1.16.20'
+    annotationProcessor 'org.projectlombok:lombok:1.16.20'
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     implementation "android.arch.lifecycle:reactivestreams:${roomVersion}"
 
     //Dagger

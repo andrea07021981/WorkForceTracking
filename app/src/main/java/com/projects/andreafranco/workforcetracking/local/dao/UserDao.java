@@ -12,7 +12,7 @@ import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 
@@ -35,18 +35,18 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id")
     LiveData<UserEntity> getUserById(long id);
 
-    @Query("SELECT * FROM users WHERE userName = :username AND password = :password")
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     LiveData<UserEntity> getAccount(String username, String password);
 
     @Insert
-    void insertUser(UserEntity userEntity);
+    public long insertUser(UserEntity userEntity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllUsers(List<UserEntity> usersList);
+    public long[] insertAllUsers(List<UserEntity> usersList);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateUser(UserEntity userEntity);
 
     @Delete
-    void deleteUser(UserEntity userEntity);
+    public int deleteUser(UserEntity userEntity);
 }

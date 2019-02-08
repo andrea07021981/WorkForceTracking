@@ -14,9 +14,9 @@ import java.util.Date;
 @Entity(tableName = "users")
 public class UserEntity implements User {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    private long id;
+    private int id;
 
     @NonNull
     @SerializedName("name")
@@ -31,41 +31,42 @@ public class UserEntity implements User {
     private String email;
 
     @NonNull
-    @SerializedName("userName")
-    private String userName;
+    @SerializedName("username")
+    private String username;
 
     @NonNull
     @SerializedName("password")
     private String password;
 
-    @ColumnInfo(name="update_at")
+    @ColumnInfo(name="updated_at")
     private Date updatedAt;
 
     @Ignore
     public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, Date updatedAt) {
         this.name = name;
         this.surname = surname;
-        this.userName= username;
+        this.username= username;
         this.email = email;
         this.password = password;
         this.updatedAt = updatedAt;
     }
 
-    public UserEntity(long id, @NonNull String name, @NonNull String surname, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(int id, @NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.username= username;
         this.email = email;
         this.password = password;
         this.updatedAt = updatedAt;
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -83,6 +84,16 @@ public class UserEntity implements User {
     @NonNull
     public String getSurname() {
         return surname;
+    }
+
+    public void setUsername(@NonNull String username) {
+        this.username = username;
+    }
+
+    @Override
+    @NonNull
+    public String getUsername() {
+        return username;
     }
 
     public void setSurname(@NonNull String surname) {
@@ -118,13 +129,4 @@ public class UserEntity implements User {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    @NonNull
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(@NonNull String userName) {
-        this.userName = userName;
-    }
 }

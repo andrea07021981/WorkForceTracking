@@ -69,6 +69,8 @@ public abstract class AppDatabase extends RoomDatabase {
      */
     private void updateDatabaseCreated(final Context context) {
         if (context.getDatabasePath(DATABASE_NAME).exists()) {
+            String currentDBPath=context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+            Log.d(LOG_TAG, currentDBPath);
             setDatabaseCreated();
         }
     }

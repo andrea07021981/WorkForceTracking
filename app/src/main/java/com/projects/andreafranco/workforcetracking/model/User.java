@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import java.util.Date;
 
 public interface User {
-    long getId();
+    int getId();
     String getName();
     String getSurname();
-    String getUserName();
+    String getUsername();
     String getEmail();
     String getPassword();
     Date getUpdatedAt();

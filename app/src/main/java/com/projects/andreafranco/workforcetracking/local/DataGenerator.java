@@ -27,9 +27,10 @@ public class DataGenerator {
 
     public static List<UserEntity> generateUsers() {
         List<UserEntity> users = new ArrayList<>();
-        Random rnd = new Random();
+        int id = 1;
         for (int i = 0; i < USER_NAME.length; i++) {
             UserEntity user = new UserEntity(
+                    id,
                     USER_NAME[i],
                     USER_SURNAME[i],
                     USER_USERNAME[i],
@@ -37,6 +38,7 @@ public class DataGenerator {
                     USER_PSW[i],
                     new Date());
             users.add(user);
+            id++;
         }
         return users;
     }
