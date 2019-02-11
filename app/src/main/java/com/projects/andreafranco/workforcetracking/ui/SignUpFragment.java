@@ -2,16 +2,12 @@ package com.projects.andreafranco.workforcetracking.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,8 +26,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.projects.andreafranco.workforcetracking.R;
+import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SignUpFragment.OnFragmentInteractionListener} interface
+ * {@link OnSignUpInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SignUpFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -55,12 +54,13 @@ public class SignUpFragment extends Fragment {
     private String mParam2;
 
     private ImageView mPictureImageView;
-    private EditText mNameEditText, mSurnameEditText, mEmailEditText, mPasswordEditText, mConfirmPasswordEditText;
+    private EditText mNameEditText, mSurnameEditText, mUserNameEditText, mEmailEditText, mPasswordEditText, mConfirmPasswordEditText;
     private Button mSignupButton;
     private Uri mProfileUri;
     private AlertDialog mAlertDialog;
 
-    private OnFragmentInteractionListener mListener;
+    private OnSignUpInteractionListener mListener;
+    private UserViewModel mUserViewModel;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -105,6 +105,7 @@ public class SignUpFragment extends Fragment {
         mSignupButton.setOnClickListener(this::signUpClick);
         mNameEditText = view.findViewById(R.id.name_edittext);
         mSurnameEditText = view.findViewById(R.id.surname_edittext);
+        mUserNameEditText = view.findViewById(R.id.username_edittext);
         mEmailEditText = view.findViewById(R.id.email_edittext);
         mPasswordEditText = view.findViewById(R.id.password_edittext);
         mConfirmPasswordEditText = view.findViewById(R.id.confirm_password_editetext);
@@ -112,21 +113,17 @@ public class SignUpFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setView(LayoutInflater.from(getActivity()).inflate(R.layout.progress_dialog, null));
         mAlertDialog = builder.create();
-        return view;
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), 0l);
+        mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnSignUpInteractionListener) {
+            mListener = (OnSignUpInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -157,15 +154,23 @@ public class SignUpFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnSignUpInteractionListener {
+        void onSavedUser();
     }
 
     public void signUpClick(View view) {
         if (checkMandatoryField()) {
-            //TODO save user on ws
             mAlertDialog.show();
+            //TODO it will be a call to ws in order to save the new user. Now we just save it local
+            mUserViewModel.createUser(new UserEntity(
+                    mNameEditText.getText().toString(),
+                    mSurnameEditText.getText().toString(),
+                    mUserNameEditText.getText().toString(),
+                    mEmailEditText.getText().toString(),
+                    mPasswordEditText.getText().toString(),
+                    new Date()));
+            mAlertDialog.dismiss();
+            mListener.onSavedUser();
         }
     }
 

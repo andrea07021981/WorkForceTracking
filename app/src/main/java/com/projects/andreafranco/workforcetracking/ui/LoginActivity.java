@@ -1,17 +1,17 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Fade;
 
 import com.projects.andreafranco.workforcetracking.R;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends SingleFragmentActivity implements LoginFragment.OnLoginFragmentInteractionListener, SignUpFragment.OnFragmentInteractionListener {
+public class LoginActivity extends SingleFragmentActivity implements LoginFragment.OnLoginFragmentInteractionListener, SignUpFragment.OnSignUpInteractionListener {
 
     @Override
     protected Fragment createFragment() {
@@ -20,8 +20,9 @@ public class LoginActivity extends SingleFragmentActivity implements LoginFragme
 
     @Override
     public void onReplaceFragment() {
-        //TODO add the animation transition with shared element LOGO
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragment_container,
                 SignUpFragment.newInstance(null,null),
                 SignUpFragment.class.getSimpleName());
@@ -35,21 +36,35 @@ public class LoginActivity extends SingleFragmentActivity implements LoginFragme
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onBackPressed() {
+        moveToFragment();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        setResult(RESULT_CANCELED);
-        //TODO add the animation transition with shared element LOGO
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        moveToFragment();
+        return true;
+    }
+
+    private void moveToFragment() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("Info message")
+                .setMessage("Would you like to log out?")
+                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
+                .setPositiveButton("Ok", (dialog, which) -> goBack())
+                .show();
+    }
+
+    private void goBack() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragment_container,
                 LoginFragment.newInstance(null),
                 LoginFragment.class.getSimpleName());
         fragmentTransaction.commit();
         setupToolbar(false);
-        return true;
     }
 
     @Override
@@ -57,6 +72,11 @@ public class LoginActivity extends SingleFragmentActivity implements LoginFragme
         //Use binding for toolbar or menu with user info and profile
         getSupportActionBar().setDisplayHomeAsUpEnabled(visible);
         getSupportActionBar().setDisplayShowHomeEnabled(visible);
+    }
+
+    @Override
+    public void onSavedUser() {
+        goBack();
     }
 }
 

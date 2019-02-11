@@ -158,7 +158,7 @@ public class LoginFragment extends Fragment{
     private void closeKeyBoard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
         assert inputMethodManager != null;
-        if (inputMethodManager.isActive()) inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(), 0);
+        if (inputMethodManager.isActive() && getActivity().getCurrentFocus() != null) inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getActivity().getCurrentFocus()).getWindowToken(), 0);
     }
 
     /**
