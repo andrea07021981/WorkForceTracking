@@ -36,22 +36,13 @@ import java.util.Random;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnSignUpInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SignUpFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for the Sign up action.
  */
 public class SignUpFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int REQUEST_IMAGES = 1;
     private static final int REQUEST_PERMISSION_CODE = 0;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private ImageView mPictureImageView;
     private EditText mNameEditText, mSurnameEditText, mUserNameEditText, mEmailEditText, mPasswordEditText, mConfirmPasswordEditText;
@@ -69,28 +60,17 @@ public class SignUpFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SignUpFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static SignUpFragment newInstance(String param1, String param2) {
         SignUpFragment fragment = new SignUpFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
     }
 
@@ -145,14 +125,7 @@ public class SignUpFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * This interface must be implemented by the activity which contains the fragment
      */
     public interface OnSignUpInteractionListener {
         void onSavedUser();

@@ -32,6 +32,7 @@ public class LoginFragment extends Fragment{
 
     // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
+    public static final String USER_ID = "user_id";
 
     private String mParam1;
 
@@ -137,10 +138,11 @@ public class LoginFragment extends Fragment{
                 if (userEntity != null) {
                     //TODO
                     //TODO in XXX activity set the style AppThemeExplode
-                    /*ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
-                    Intent intent = new Intent(getActivity(), "XXX not defined");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra(USER_ID, userEntity.getId());
                     startActivity(intent, options.toBundle());
-                    mListener.onStartNewActivity(intent);*/
+                    mListener.onStartNewActivity(intent);
                     Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
