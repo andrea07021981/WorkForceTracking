@@ -6,10 +6,8 @@ import android.os.Bundle;
 import com.projects.andreafranco.workforcetracking.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class MainActivity extends SingleFragmentActivity implements MainFragment.OnMainFragmentInteractionListener{
+public class DashBoardActivity extends SingleFragmentActivity implements DashBoardFragment.OnDashBoardFragmentInteractionListener {
 
     private int mUserId;
     private ArrayList<Integer> mMenuImages;
@@ -19,16 +17,14 @@ public class MainActivity extends SingleFragmentActivity implements MainFragment
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mUserId = extras.getInt(LoginFragment.USER_ID);
-            //TODO, based on user type (Team leader or others) we'll have differents home pages. Now, we set it up with fixed images
-            mMenuImages = new ArrayList<Integer>();
-            mMenuImages.addAll(Arrays.asList(R.drawable.team, R.drawable.calendar, R.drawable.materials));
         }
+        setTitle(R.string.dashboard_title);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected Fragment createFragment() {
-        return MainFragment.newInstance(mUserId, mMenuImages);
+        return DashBoardFragment.newInstance(mUserId);
     }
 
     @Override

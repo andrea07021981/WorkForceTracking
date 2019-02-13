@@ -6,7 +6,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -136,10 +135,8 @@ public class LoginFragment extends Fragment{
             @Override
             public void onChanged(@Nullable UserEntity userEntity) {
                 if (userEntity != null) {
-                    //TODO
-                    //TODO in XXX activity set the style AppThemeExplode
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                     intent.putExtra(USER_ID, userEntity.getId());
                     startActivity(intent, options.toBundle());
                     mListener.onStartNewActivity(intent);

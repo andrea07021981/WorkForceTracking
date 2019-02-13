@@ -3,41 +3,31 @@ package com.projects.andreafranco.workforcetracking.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.projects.andreafranco.workforcetracking.AppExecutors;
 import com.projects.andreafranco.workforcetracking.R;
-import com.projects.andreafranco.workforcetracking.ui.component.MainRecycleViewAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.widget.LinearLayout.VERTICAL;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
+import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnMainFragmentInteractionListener} interface
+ * {@link OnDashBoardFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MainFragment#newInstance} factory method to
+ * Use the {@link DashBoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class DashBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private int mUserId;
 
-    private OnMainFragmentInteractionListener mListener;
-    private List<Integer> mMenuImageItems;
+    private OnDashBoardFragmentInteractionListener mListener;
 
-    public MainFragment() {
+    public DashBoardFragment() {
         // Required empty public constructor
     }
 
@@ -46,14 +36,12 @@ public class MainFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param userId Parameter 1.
-     * @param mMenuImages
-     * @return A new instance of fragment MainFragment.
+     * @return A new instance of fragment DashBoardFragment.
      */
-    public static MainFragment newInstance(int userId, ArrayList<Integer> mMenuImages) {
-        MainFragment fragment = new MainFragment();
+    public static DashBoardFragment newInstance(int userId) {
+        DashBoardFragment fragment = new DashBoardFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, userId);
-        args.putIntegerArrayList(ARG_PARAM2, mMenuImages);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,7 +51,6 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUserId = getArguments().getInt(ARG_PARAM1);
-            mMenuImageItems = getArguments().getIntegerArrayList(ARG_PARAM2);
         }
     }
 
@@ -71,7 +58,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         initValues(view);
         return view;
     }
@@ -80,10 +67,11 @@ public class MainFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.main_recycleview);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        MainRecycleViewAdapter mainRecycleViewAdapter = new MainRecycleViewAdapter(mMenuImageItems);
-        recyclerView.setAdapter(mainRecycleViewAdapter);
-        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), VERTICAL);
+        DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity());
+        recyclerView.setAdapter(dashBoardRecycleViewAdapter);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         recyclerView.addItemDecoration(decoration);
+        dashBoardRecycleViewAdapter.notifyDataSetChanged();
 
         //TODO add item click on custom adapter.viewholder
         //TODO move this helper to the next list of users in the team
@@ -104,8 +92,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnMainFragmentInteractionListener) {
-            mListener = (OnMainFragmentInteractionListener) context;
+        if (context instanceof OnDashBoardFragmentInteractionListener) {
+            mListener = (OnDashBoardFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -119,7 +107,7 @@ public class MainFragment extends Fragment {
     }
 
 
-    public interface OnMainFragmentInteractionListener {
+    public interface OnDashBoardFragmentInteractionListener {
         void onFragmentInteraction();
     }
 }
