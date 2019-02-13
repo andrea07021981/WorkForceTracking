@@ -37,6 +37,7 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
     }
 
     private void setUpNavigationDrawer() {
+        //TODO Set the view model and get data from the active user
         Toolbar toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,7 +126,7 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
