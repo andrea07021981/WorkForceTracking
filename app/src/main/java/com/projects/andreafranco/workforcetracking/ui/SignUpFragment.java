@@ -27,6 +27,7 @@ import android.widget.ImageView;
 
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class SignUpFragment extends Fragment {
     private static final int REQUEST_IMAGES = 1;
     private static final int REQUEST_PERMISSION_CODE = 0;
 
-    private ImageView mPictureImageView;
+    private CircleImageView mPictureImageView;
     private EditText mNameEditText, mSurnameEditText, mUserNameEditText, mEmailEditText, mPasswordEditText, mConfirmPasswordEditText;
     private Button mSignupButton;
     private Uri mProfileUri;
@@ -79,7 +80,7 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         mPictureImageView = view.findViewById(R.id.picture_imageview);
         mPictureImageView.setOnClickListener(this::profileImageClick);
-        ((GradientDrawable) mPictureImageView.getBackground()).setColor(getRandonColor());
+        /*((GradientDrawable) mPictureImageView.getBackground()).setColor(getRandonColor());*/
         mSignupButton = view.findViewById(R.id.signup_button);
         mSignupButton.setOnClickListener(this::signUpClick);
         mNameEditText = view.findViewById(R.id.name_edittext);
