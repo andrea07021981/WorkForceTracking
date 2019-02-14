@@ -38,26 +38,32 @@ public class UserEntity implements User {
     @SerializedName("password")
     private String password;
 
+    @NonNull
+    @SerializedName("image")
+    private byte[] image;
+
     @ColumnInfo(name="updated_at")
     private Date updatedAt;
 
     @Ignore
-    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Date updatedAt) {
         this.name = name;
         this.surname = surname;
         this.username= username;
         this.email = email;
         this.password = password;
         this.updatedAt = updatedAt;
+        this.image = image;
     }
 
-    public UserEntity(int id, @NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, Date updatedAt) {
+    public UserEntity(int id, @NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.username= username;
         this.email = email;
         this.password = password;
+        this.image = image;
         this.updatedAt = updatedAt;
     }
 
@@ -104,6 +110,12 @@ public class UserEntity implements User {
     @NonNull
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    @NonNull
+    public byte[] getImage() {
+        return new byte[0];
     }
 
     public void setEmail(@NonNull String email) {

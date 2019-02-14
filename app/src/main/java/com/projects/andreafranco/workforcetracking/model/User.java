@@ -10,6 +10,7 @@ public interface User {
     String getSurname();
     String getUsername();
     String getEmail();
+    byte[] getImage();
     String getPassword();
     Date getUpdatedAt();
 }

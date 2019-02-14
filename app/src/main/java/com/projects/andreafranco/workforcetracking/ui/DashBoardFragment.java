@@ -1,17 +1,27 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.projects.andreafranco.workforcetracking.R;
+import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +82,9 @@ public class DashBoardFragment extends Fragment {
         SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         recyclerView.addItemDecoration(decoration);
         dashBoardRecycleViewAdapter.notifyDataSetChanged();
+        UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
+        UserViewModel mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        subscribeToModel(mUserViewModel);
 
         //TODO add item click on custom adapter.viewholder
         //TODO move this helper to the next list of users in the team
@@ -87,6 +100,23 @@ public class DashBoardFragment extends Fragment {
 
             }
         }).attachToRecyclerView(recyclerView);*/
+    }
+
+    private void subscribeToModel(final UserViewModel model) {
+        model.getObservableUser().observe(this, new Observer<UserEntity>() {
+            @Override
+            public void onChanged(@Nullable UserEntity userEntity) {
+                //TODO must use data binding and viewmodel
+                model.setUser(userEntity);
+                NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                View headerView = navigationView.getHeaderView(0);
+                TextView userInfoTextView = (TextView) headerView.findViewById(R.id.userinfo_textview);
+                userInfoTextView.setText(userEntity.getName() + " " + userEntity.getSurname());
+                CircleImageView userLogoImageView = getActivity().findViewById(R.id.userlogo_imageView);
+                //TODO check why image is not saved (or yes?)
+                userLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
+            }
+        });
     }
 
     @Override

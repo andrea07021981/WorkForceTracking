@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
@@ -135,16 +137,25 @@ public class SignUpFragment extends Fragment {
         if (checkMandatoryField()) {
             mAlertDialog.show();
             //TODO it will be a call to ws in order to save the new user. Now we just save it local
+            //TODO If the user doesn't have an image, create the bitmap with initial name and surname
+            Bitmap bitmap = ((BitmapDrawable) mPictureImageView.getDrawable()).getBitmap();
+            byte[] imageData = bitmapAsByteArray(bitmap);
             mUserViewModel.createUser(new UserEntity(
                     mNameEditText.getText().toString(),
                     mSurnameEditText.getText().toString(),
                     mUserNameEditText.getText().toString(),
                     mEmailEditText.getText().toString(),
                     mPasswordEditText.getText().toString(),
+                    imageData,
                     new Date()));
             mAlertDialog.dismiss();
             mListener.onSavedUser();
         }
+    }
+
+    public static byte[] bitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream output= new ByteArrayOutputStream(); bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
+        return output.toByteArray();
     }
 
     private boolean checkMandatoryField() {

@@ -13,13 +13,14 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
-        android:id="@+id/imageView"
+        android:id="@+id/userlogo_imageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/nav_header_desc"
         android:background="@drawable/circle" />
 
     <TextView
+        android:id="@+id/userinfo_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
