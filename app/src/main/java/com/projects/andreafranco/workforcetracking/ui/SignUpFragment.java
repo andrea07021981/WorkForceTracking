@@ -62,7 +62,6 @@ public class SignUpFragment extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment SignUpFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SignUpFragment newInstance(String param1, String param2) {
         SignUpFragment fragment = new SignUpFragment();
         return fragment;

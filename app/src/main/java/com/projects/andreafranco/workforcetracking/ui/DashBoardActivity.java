@@ -125,17 +125,17 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_team) {
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_shift) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_manuals) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_logout) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_email) {
 
         }
 
