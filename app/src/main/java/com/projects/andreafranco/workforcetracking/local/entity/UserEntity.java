@@ -40,6 +40,7 @@ public class UserEntity implements User {
 
     @NonNull
     @SerializedName("image")
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 
     @ColumnInfo(name="updated_at")
