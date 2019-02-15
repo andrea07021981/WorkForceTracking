@@ -1,13 +1,11 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -24,11 +22,6 @@ import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecora
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnDashBoardFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DashBoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class DashBoardFragment extends Fragment {
@@ -36,6 +29,9 @@ public class DashBoardFragment extends Fragment {
     private int mUserId;
 
     private OnDashBoardFragmentInteractionListener mListener;
+    private RecyclerView mRecyclerView;
+    private TextView mUserInfoTextView;
+    private CircleImageView mUserLogoImageView;
 
     public DashBoardFragment() {
         // Required empty public constructor
@@ -73,14 +69,9 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void initValues(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.main_recycleview);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity());
-        recyclerView.setAdapter(dashBoardRecycleViewAdapter);
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
-        recyclerView.addItemDecoration(decoration);
-        dashBoardRecycleViewAdapter.notifyDataSetChanged();
+        mUserInfoTextView = view.findViewById(R.id.userinfo_textview);
+        mUserLogoImageView = view.findViewById(R.id.userlogo_imageView);
+        initRecycleView(view);
         UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
         UserViewModel mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
         subscribeToModel(mUserViewModel);
@@ -101,18 +92,26 @@ public class DashBoardFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);*/
     }
 
+    private void initRecycleView(View view) {
+        mRecyclerView = view.findViewById(R.id.main_recycleview);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity());
+        mRecyclerView.setAdapter(dashBoardRecycleViewAdapter);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        mRecyclerView.addItemDecoration(decoration);
+        dashBoardRecycleViewAdapter.notifyDataSetChanged();
+    }
+
     private void subscribeToModel(final UserViewModel model) {
         model.getObservableUser().observe(this, new Observer<UserEntity>() {
             @Override
             public void onChanged(@Nullable UserEntity userEntity) {
                 //TODO must use data binding and viewmodel
                 model.setUser(userEntity);
-                NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                View headerView = navigationView.getHeaderView(0);
-                TextView userInfoTextView = (TextView) headerView.findViewById(R.id.userinfo_textview);
-                userInfoTextView.setText(userEntity.getName() + " " + userEntity.getSurname());
-                CircleImageView userLogoImageView = getActivity().findViewById(R.id.userlogo_imageView);
-                userLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
+                String dimensionFormat = getContext().getString(R.string.format_userinfo);
+                mUserInfoTextView.setText(String.format(dimensionFormat, userEntity.getName(), userEntity.getSurname()));
+                mUserLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
             }
         });
     }

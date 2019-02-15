@@ -18,35 +18,25 @@
         android:gravity="left">
 
         <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
-            android:id="@+id/userlogo_imageView"
+            android:id="@+id/logo_imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:src="@drawable/logo"
             android:contentDescription="@string/nav_header_desc"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="@drawable/circle" />
 
         <TextView
-            android:id="@+id/userinfo_textview"
+            android:id="@+id/logoinfo_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="@dimen/nav_header_vertical_spacing"
             android:text="@string/nav_header_title"
             android:textStyle="italic"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:layout_toRightOf="@id/userlogo_imageView"/>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
-            android:gravity="center"
-            android:padding="@dimen/nav_header_vertical_spacing"
-            android:textColor="@android:color/holo_green_dark"
-            android:text="@string/nav_header_subtitle"
-            android:layout_toRightOf="@id/userlogo_imageView"
-            android:layout_below="@id/userinfo_textview"/>
+            android:layout_toRightOf="@id/logo_imageView"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
 </LinearLayout>

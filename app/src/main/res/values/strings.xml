@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Work Force Tracking</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -9,14 +9,16 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Andrea Franco</string>
+    <string name="nav_header_title">Work Force Management</string>
     <string name="nav_header_subtitle">ON SHIFT</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="format_userinfo">
+        <xliff:g id="name">%s</xliff:g>
+        <xliff:g id="surname">%s</xliff:g>
+    </string>
 </resources>
