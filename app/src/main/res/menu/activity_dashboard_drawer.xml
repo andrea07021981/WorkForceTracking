@@ -7,13 +7,13 @@
         android:checkableBehavior="single"
         android:id="@+id/main_group">
         <item
-            android:id="@+id/nav_team"
-            android:icon="@drawable/ic_users"
-            android:title="Team" />
-        <item
             android:id="@+id/nav_shift"
             android:icon="@drawable/ic_clock"
             android:title="Shift" />
+        <item
+            android:id="@+id/nav_payments"
+            android:icon="@drawable/ic_payments"
+            android:title="Payments" />
         <item
             android:id="@+id/nav_manuals"
             android:icon="@drawable/ic_manuals"

@@ -7,15 +7,10 @@ import java.lang.annotation.RetentionPolicy;
 
 public class DashboardFunction {
 
-    private final int drawable;
     @FunctionType private final int functionType;
 
     public int getFunctionType() {
         return functionType;
-    }
-
-    public int getDrawable() {
-        return drawable;
     }
 
     @Retention(RetentionPolicy.SOURCE)
@@ -29,8 +24,7 @@ public class DashboardFunction {
     public static final int FUNCTION_CALENDAR = 2;
     public static final int FUNCTION_MATERIAL = 3;
 
-    public DashboardFunction(int drawable, @FunctionType int functionType) {
-        this.drawable = drawable;
+    public DashboardFunction(@FunctionType int functionType) {
         this.functionType = functionType;
     }
 }

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class DashBoardActivity extends SingleFragmentActivity implements DashBoardFragment.OnDashBoardFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     private int mUserId;
-    private ArrayList<Integer> mMenuImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +122,7 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_team) {
+        if (id == R.id.nav_payments) {
 
         } else if (id == R.id.nav_shift) {
 

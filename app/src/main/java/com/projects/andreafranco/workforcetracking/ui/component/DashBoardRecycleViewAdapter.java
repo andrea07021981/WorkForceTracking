@@ -29,9 +29,9 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
         //TODO every item will become a fragment and it will be set it up on every xml with class...
         mImageList = new ArrayList<DashboardFunction>();
         mImageList.addAll(Arrays.asList(
-                new DashboardFunction(R.drawable.team, DashboardFunction.FUNCTION_TEAM),
-                new DashboardFunction(R.drawable.calendar, DashboardFunction.FUNCTION_CALENDAR),
-                new DashboardFunction(R.drawable.materials, DashboardFunction.FUNCTION_MATERIAL)));
+                new DashboardFunction(DashboardFunction.FUNCTION_TEAM),
+                new DashboardFunction(DashboardFunction.FUNCTION_CALENDAR),
+                new DashboardFunction(DashboardFunction.FUNCTION_MATERIAL)));
     }
 
     @Override
@@ -59,17 +59,17 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
         switch (viewType) {
             case DashboardFunction.FUNCTION_TEAM:
-                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item_view, parent, false);
+                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item_view, parent, false);
                 dashBoardViewHolder = new DashBoardViewHolder(layoutView, viewType);
                 break;
 
             case DashboardFunction.FUNCTION_CALENDAR:
-                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item_view, parent, false);
+                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_item_view, parent, false);
                 dashBoardViewHolder = new DashBoardViewHolder(layoutView, viewType);
                 break;
 
             case DashboardFunction.FUNCTION_MATERIAL:
-                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item_view, parent, false);
+                layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.materials_item_view, parent, false);
                 dashBoardViewHolder = new DashBoardViewHolder(layoutView, viewType);
                 break;
 
@@ -107,13 +107,11 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
      * */
     public class DashBoardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         DashboardFunction mDashboardFunction;
-        ImageView mImageImageVIew;
         CardView mLayout;
 
         public DashBoardViewHolder(View view, @DashboardFunction.FunctionType int type) {
             super(view);
             mLayout = (CardView) view.findViewById(R.id.card_view);
-            mImageImageVIew = (ImageView) view.findViewById(R.id.info_imageview);
             view.setOnClickListener(this::onClick);
         }
 
@@ -144,7 +142,6 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
                     break;
             }
             mDashboardFunction = function;
-            mImageImageVIew.setImageResource(mDashboardFunction.getDrawable());
         }
 
         @Override
