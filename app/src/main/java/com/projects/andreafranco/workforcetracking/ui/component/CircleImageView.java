@@ -37,6 +37,7 @@ import java.util.Random;
 @SuppressWarnings("UnusedDeclaration")
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
+    //TODO add status variable in roder to create bitmap with a status (enum?)
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;

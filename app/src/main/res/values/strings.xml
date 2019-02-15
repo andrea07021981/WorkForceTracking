@@ -13,7 +13,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Work Force Management</string>
-    <string name="nav_header_subtitle">ON SHIFT</string>
+    <string name="nav_header_subtitle">Supervisor</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -21,4 +21,7 @@
         <xliff:g id="name">%s</xliff:g>
         <xliff:g id="surname">%s</xliff:g>
     </string>
+    <string name="team_management">Team management</string>
+    <string name="current_status">Current status:</string>
+    <string name="profile_image">Profile image</string>
 </resources>

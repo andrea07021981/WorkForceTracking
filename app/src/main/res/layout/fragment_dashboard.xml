@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:padding="7dp"
     tools:context=".ui.DashBoardActivity">
 
@@ -24,10 +25,23 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/circle"
-            android:contentDescription="@string/nav_header_desc"
+            android:contentDescription="@string/profile_image"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/fui_transparent"
+            android:paddingLeft="@dimen/activity_vertical_padding_24"
+            android:paddingTop="@dimen/activity_vertical_padding_24"
+            android:src="@drawable/edit"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@id/userlogo_imageView"
+            app:layout_constraintEnd_toEndOf="@id/userlogo_imageView" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,24 +61,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:paddingLeft="@dimen/nav_header_vertical_spacing"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/status_textView"
+                android:id="@+id/title_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="left"
                 android:paddingLeft="@dimen/nav_header_vertical_spacing"
                 android:text="@string/nav_header_subtitle"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="@android:color/white"
                 android:textStyle="bold|italic" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/gradient_line"
+        android:layout_alignBottom="@id/header_layout"
+        android:padding="@dimen/activity_vertical_padding"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_recycleview"

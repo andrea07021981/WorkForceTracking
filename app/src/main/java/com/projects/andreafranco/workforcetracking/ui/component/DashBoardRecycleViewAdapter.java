@@ -59,6 +59,7 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
         switch (viewType) {
             case DashboardFunction.FUNCTION_TEAM:
+                //TODO, create one fragment for every function. Fragment will contain the cardview xml
                 layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item_view, parent, false);
                 dashBoardViewHolder = new DashBoardViewHolder(layoutView, viewType);
                 break;
