@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.projects.andreafranco.workforcetracking.R;
 
@@ -57,18 +59,14 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
         final View contentView = findViewById(R.id.content);
 
         toolbar.setNavigationIcon(new DrawerArrowDrawable(this));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(View v) {
-                                                     if (drawerLayout.isDrawerOpen(navigationView)) {
-                                                         drawerLayout.closeDrawer(navigationView);
-                                                     }
-                                                     else {
-                                                         drawerLayout.openDrawer(navigationView);
-                                                     }
-                                                 }
-                                             }
-        );
+        toolbar.setNavigationOnClickListener(v -> {
+            if (drawerLayout.isDrawerOpen(navigationView)) {
+                drawerLayout.closeDrawer(navigationView);
+            }
+            else {
+                drawerLayout.openDrawer(navigationView, true);
+            }
+        });
 
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {

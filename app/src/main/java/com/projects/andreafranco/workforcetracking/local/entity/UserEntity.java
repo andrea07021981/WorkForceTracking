@@ -116,7 +116,7 @@ public class UserEntity implements User {
     @Override
     @NonNull
     public byte[] getImage() {
-        return new byte[0];
+        return image;
     }
 
     public void setEmail(@NonNull String email) {

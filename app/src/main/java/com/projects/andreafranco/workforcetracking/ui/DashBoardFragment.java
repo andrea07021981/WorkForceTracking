@@ -113,7 +113,6 @@ public class DashBoardFragment extends Fragment {
                 TextView userInfoTextView = (TextView) headerView.findViewById(R.id.userinfo_textview);
                 userInfoTextView.setText(userEntity.getName() + " " + userEntity.getSurname());
                 CircleImageView userLogoImageView = getActivity().findViewById(R.id.userlogo_imageView);
-                //TODO check why image is not saved (or yes?)
                 userLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
             }
         });

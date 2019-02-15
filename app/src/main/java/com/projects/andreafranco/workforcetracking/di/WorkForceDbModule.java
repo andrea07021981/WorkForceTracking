@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+//TODO implement DI
 @Module
 public class WorkForceDbModule {
 

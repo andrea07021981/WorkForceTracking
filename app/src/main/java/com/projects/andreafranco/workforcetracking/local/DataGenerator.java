@@ -36,7 +36,7 @@ public class DataGenerator {
                     USER_USERNAME[i],
                     USER_EMAIL[i],
                     USER_PSW[i],
-                    null,
+                    new byte[0],
                     new Date());
             users.add(user);
             id++;
