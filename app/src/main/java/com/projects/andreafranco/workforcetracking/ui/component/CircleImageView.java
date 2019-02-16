@@ -189,6 +189,9 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         return mCircleBackgroundColor;
     }
 
+    public Bitmap getBitmap() {
+        return mBitmap;
+    }
     public void setCircleBackgroundColor(@ColorInt int circleBackgroundColor) {
         if (circleBackgroundColor == mCircleBackgroundColor) {
             return;

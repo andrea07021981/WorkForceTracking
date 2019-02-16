@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
@@ -137,8 +138,13 @@ public class SignUpFragment extends Fragment {
         if (checkMandatoryField()) {
             mAlertDialog.show();
             //TODO it will be a call to ws in order to save the new user. Now we just save it local
-            //TODO If the user doesn't have an image, create the bitmap with initial name and surname
-            Bitmap bitmap = ((BitmapDrawable) mPictureImageView.getDrawable()).getBitmap();
+            BitmapDrawable drawable = (BitmapDrawable) mPictureImageView.getDrawable();
+            Bitmap bitmap = null;
+            if (drawable == null) {
+                bitmap = createCustomBitmap(mPictureImageView.getWidth(), mPictureImageView.getHeight(), mPictureImageView.getBitmap());
+            } else {
+                bitmap = ((BitmapDrawable) mPictureImageView.getDrawable()).getBitmap();
+            }
             byte[] imageData = bitmapAsByteArray(bitmap);
             mUserViewModel.createUser(new UserEntity(
                     mNameEditText.getText().toString(),
@@ -151,6 +157,49 @@ public class SignUpFragment extends Fragment {
             mAlertDialog.dismiss();
             mListener.onSavedUser();
         }
+    }
+
+    private Bitmap createCustomBitmap(int width, int height, Bitmap image) {
+        //We are assuming that the whole image has the same color, so we can extract a fixed position
+        int pixel = image.getPixel(0, 0);
+        int r = Color.red(pixel);
+        int g = Color.green(pixel);
+        int b = Color.blue(pixel);
+        int circleBackgroundColor = Color.rgb(r, g, b);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(circleBackgroundColor);
+        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
+
+        //Set the text
+        Paint paintText = new Paint();
+        paintText.setColor(getContrastColor(circleBackgroundColor));
+        paintText.setTextSize(100);
+        paintText.setTypeface(Typeface.create("Arial", Typeface.BOLD));
+        paintText.setTextAlign(Paint.Align.CENTER);
+        int xPos = (canvas.getWidth() / 2);
+        int yPos = (int) ((canvas.getHeight() / 2) - ((paintText.descent() + paintText.ascent()) / 2)) ;
+        canvas.drawText(mNameEditText.getText().subSequence(0, 1).toString().toUpperCase() + mSurnameEditText.getText().subSequence(0, 1).toString().toUpperCase(),
+                xPos,
+                yPos,
+                paintText);
+        return bitmap;
+    }
+
+    private int getContrastColor(int color) {
+        // get existing colors
+        int alpha = Color.alpha(color);
+        int red = Color.red(color);
+        int blue = Color.blue(color);
+        int green = Color.green(color);
+
+        // find compliments
+        red = (~red) & 0xff;
+        blue = (~blue) & 0xff;
+        green = (~green) & 0xff;
+
+        return Color.argb(alpha, red, green, blue);
     }
 
     public static byte[] bitmapAsByteArray(Bitmap bitmap) {
