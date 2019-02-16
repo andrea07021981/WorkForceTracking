@@ -4,5 +4,7 @@ about team, jobs and so on. There's a login/signup page and a dashboard with a l
 I've used a MVVM architecture with Room, Entity, Dao, Repository and Viewmodel. I've also prepared for Dagger2 and Retrofit,
 not yet implemented.
 
+<img align="left" width="350" height="600" src="login.png">
+
 
 
