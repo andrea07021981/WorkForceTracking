@@ -34,7 +34,8 @@
 
         <activity
             android:name=".ui.DashBoardActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".TeamManagementActivity"></activity>
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/browser_actions_text_color</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppThemeExplode" parent="AppTheme">
