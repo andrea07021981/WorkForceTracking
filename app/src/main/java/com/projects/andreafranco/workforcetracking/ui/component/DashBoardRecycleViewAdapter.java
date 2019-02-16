@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.projects.andreafranco.workforcetracking.FunctionTeamFragment;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
 

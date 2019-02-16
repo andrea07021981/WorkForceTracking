@@ -50,7 +50,7 @@ public class LoginActivity extends SingleFragmentActivity implements LoginFragme
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle("Info message")
-                .setMessage("Would you like to log out?")
+                .setMessage("Would you like exit?")
                 .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
                 .setPositiveButton("Ok", (dialog, which) -> goBack())
                 .show();
