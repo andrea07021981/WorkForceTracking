@@ -31,11 +31,6 @@ public class LoginActivity extends SingleFragmentActivity implements LoginFragme
     }
 
     @Override
-    public void onStartNewActivity(Intent intent) {
-        startActivity(intent);
-    }
-
-    @Override
     public void onBackPressed() {
         moveToFragment();
     }

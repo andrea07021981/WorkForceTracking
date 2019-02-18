@@ -1,5 +1,6 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -139,5 +140,16 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("Info message")
+                .setMessage("Would you like to log out?")
+                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
+                .setPositiveButton("Ok", (dialog, which) -> finish())
+                .show();;
     }
 }

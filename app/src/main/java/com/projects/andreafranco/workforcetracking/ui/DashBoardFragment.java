@@ -26,12 +26,13 @@ import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycle
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
+import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_ID;
+
 /**
  * create an instance of this fragment.
  */
 public class DashBoardFragment extends Fragment implements DashBoardRecycleViewAdapter.OnItemInteractionListener {
     private static final String ARG_PARAM1 = "param1";
-    private static final String USER_ID = "user_id";
     private int mUserId;
 
     private OnDashBoardFragmentInteractionListener mListener;

@@ -139,7 +139,6 @@ public class LoginFragment extends Fragment{
                     Intent intent = new Intent(getActivity(), DashBoardActivity.class);
                     intent.putExtra(USER_ID, userEntity.getId());
                     startActivity(intent, options.toBundle());
-                    mListener.onStartNewActivity(intent);
                     Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
@@ -172,6 +171,5 @@ public class LoginFragment extends Fragment{
      */
     public interface OnLoginFragmentInteractionListener {
         void onReplaceFragment();
-        void onStartNewActivity(Intent intent);
     }
 }
