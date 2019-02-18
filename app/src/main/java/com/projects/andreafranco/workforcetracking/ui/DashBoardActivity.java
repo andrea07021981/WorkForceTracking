@@ -1,5 +1,6 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -38,7 +39,6 @@ public class DashBoardActivity extends SingleFragmentActivity implements DashBoa
     }
 
     private void setUpNavigationDrawer() {
-        //TODO Set the view model and get data from the active user
         Toolbar toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
         setSupportActionBar(toolbar);
 

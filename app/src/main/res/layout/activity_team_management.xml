@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeamManagementActivity">
-
-    <ImageView
-        android:id="@+id/info_imageview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:transitionName="image_team"/>
-
+    tools:context=".ui.TeamManagementActivity">
+    
 </android.support.constraint.ConstraintLayout>

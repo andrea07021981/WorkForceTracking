@@ -2,17 +2,18 @@ package com.projects.andreafranco.workforcetracking.ui.component;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 
-import com.projects.andreafranco.workforcetracking.FunctionTeamFragment;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
+import com.projects.andreafranco.workforcetracking.ui.DashBoardFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +23,9 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
     private final int mUserId;
     private final Context mContext;
     private List<DashboardFunction> mImageList;
+    private OnItemInteractionListener mListener;
 
-    public DashBoardRecycleViewAdapter(int userId, Context context) {
+    public DashBoardRecycleViewAdapter(int userId, Context context, Fragment fragment) {
         mUserId = userId;
         mContext = context;
         //TODO, based on user type (Team leader or others) we'll have differents home pages. Now, we set it up with fixed images
@@ -33,6 +35,17 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
                 new DashboardFunction(DashboardFunction.FUNCTION_TEAM),
                 new DashboardFunction(DashboardFunction.FUNCTION_CALENDAR),
                 new DashboardFunction(DashboardFunction.FUNCTION_MATERIAL)));
+
+        if (fragment instanceof OnItemInteractionListener) {
+            mListener = (OnItemInteractionListener) fragment;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnItemInteractionListener");
+        }
+    }
+
+    public interface OnItemInteractionListener {
+        void onItemSelected(DashboardFunction dashboardFunction);
     }
 
     @Override
@@ -60,7 +73,6 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
         switch (viewType) {
             case DashboardFunction.FUNCTION_TEAM:
-                //TODO, create one fragment for every function. Fragment will contain the cardview xml
                 layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item_view, parent, false);
                 dashBoardViewHolder = new DashBoardViewHolder(layoutView, viewType);
                 break;
@@ -126,6 +138,8 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
                     //Expand the item
                     //layoutParams.setFullSpan(true);
                     mLayout.setLayoutParams(layoutParams);
+                    Button manageTeamButton = mLayout.findViewById(R.id.mangeteam_button);
+                    manageTeamButton.setOnClickListener(v -> mListener.onItemSelected(function));
                     break;
 
                 case DashboardFunction.FUNCTION_CALENDAR:

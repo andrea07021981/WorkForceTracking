@@ -3,10 +3,14 @@ package com.projects.andreafranco.workforcetracking.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import android.widget.TextView;
 
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
@@ -24,8 +29,9 @@ import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 /**
  * create an instance of this fragment.
  */
-public class DashBoardFragment extends Fragment {
+public class DashBoardFragment extends Fragment implements DashBoardRecycleViewAdapter.OnItemInteractionListener {
     private static final String ARG_PARAM1 = "param1";
+    private static final String USER_ID = "user_id";
     private int mUserId;
 
     private OnDashBoardFragmentInteractionListener mListener;
@@ -96,7 +102,7 @@ public class DashBoardFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.main_recycleview);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-        DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity());
+        DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity(), this);
         mRecyclerView.setAdapter(dashBoardRecycleViewAdapter);
         SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);
@@ -133,6 +139,26 @@ public class DashBoardFragment extends Fragment {
         mListener = null;
     }
 
+    //Events from recycleview
+    @Override
+    public void onItemSelected(DashboardFunction dashboardFunction) {
+        switch (dashboardFunction.getFunctionType()) {
+            case DashboardFunction.FUNCTION_TEAM:
+                Intent intent = new Intent(getActivity(), TeamManagementActivity.class);
+                intent.putExtra(USER_ID, mUserId);
+                startActivity(intent);
+                break;
+
+            case DashboardFunction.FUNCTION_CALENDAR:
+                break;
+
+            case DashboardFunction.FUNCTION_MATERIAL:
+                break;
+
+            default:
+                break;
+        }
+    }
 
     public interface OnDashBoardFragmentInteractionListener {
         void onFragmentInteraction();
