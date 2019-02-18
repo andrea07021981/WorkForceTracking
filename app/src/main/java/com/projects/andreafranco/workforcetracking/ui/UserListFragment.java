@@ -35,7 +35,6 @@ public class UserListFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment UserListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static UserListFragment newInstance(int param1) {
         UserListFragment fragment = new UserListFragment();
         Bundle args = new Bundle();
