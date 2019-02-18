@@ -3,31 +3,35 @@ package com.projects.andreafranco.workforcetracking.ui;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.projects.andreafranco.workforcetracking.R;
-import com.projects.andreafranco.workforcetracking.ui.component.TeamManagementPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnTeamManagementFragmentInteractionListener} interface
+ * {@link OnUserMapFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TeamManagementFragment#newInstance} factory method to
+ * Use the {@link UserMapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TeamManagementFragment extends Fragment {
+public class UserMapFragment extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
-    private int mUserId;
-    private OnTeamManagementFragmentInteractionListener mListener;
+    private int mParam1;
+    private GoogleMap mGoogleMap;
 
-    public TeamManagementFragment() {
+    private OnUserMapFragmentInteractionListener mListener;
+    private AppCompatActivity mContext;
+
+    public UserMapFragment() {
         // Required empty public constructor
     }
 
@@ -35,13 +39,13 @@ public class TeamManagementFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param userId Parameter 1.
-     * @return A new instance of fragment TeamManagementFragment.
+     * @param param1 Parameter 1.
+     * @return A new instance of fragment UserMapFragment.
      */
-    public static TeamManagementFragment newInstance(int userId) {
-        TeamManagementFragment fragment = new TeamManagementFragment();
+    public static UserMapFragment newInstance(int param1) {
+        UserMapFragment fragment = new UserMapFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, userId);
+        args.putInt(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +54,7 @@ public class TeamManagementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUserId = getArguments().getInt(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
         }
     }
 
@@ -58,27 +62,29 @@ public class TeamManagementFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_team_management, container, false);
-
-        TabLayout teamTabLayout = view.findViewById(R.id.team_tablayout);
-        ViewPager mainContentViewPager = view.findViewById(R.id.main_content_viewpager);
-        TeamManagementPagerAdapter teamManagementPagerAdapter = new TeamManagementPagerAdapter(getChildFragmentManager(), mUserId);
-        mainContentViewPager.setAdapter(teamManagementPagerAdapter);
-        teamTabLayout.setupWithViewPager(mainContentViewPager);
-        setupTabs(teamTabLayout);
-        return view;
+        return inflater.inflate(R.layout.fragment_user_map, container, false);
     }
 
-    private void setupTabs(TabLayout teamTabLayout) {
-        teamTabLayout.getTabAt(0).setIcon(R.mipmap.ic_list);
-        teamTabLayout.getTabAt(1).setIcon(R.mipmap.ic_map);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        if(getActivity()!=null) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            }
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnTeamManagementFragmentInteractionListener) {
-            mListener = (OnTeamManagementFragmentInteractionListener) context;
+        if (context instanceof OnUserMapFragmentInteractionListener) {
+            mContext = (AppCompatActivity) context;
+            mListener = (OnUserMapFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -91,6 +97,11 @@ public class TeamManagementFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -101,7 +112,8 @@ public class TeamManagementFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnTeamManagementFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public interface OnUserMapFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onMapClick(Uri uri);
     }
 }

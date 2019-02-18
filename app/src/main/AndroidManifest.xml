@@ -37,7 +37,8 @@
         <activity
             android:name=".ui.DashBoardActivity"
             android:theme="@style/AppThemeNoActionBar" />
-        <activity android:name=".ui.TeamManagementActivity"
+        <activity
+            android:name=".ui.TeamManagementActivity"
             android:theme="@style/AppThemeExplode" />
     </application>
 

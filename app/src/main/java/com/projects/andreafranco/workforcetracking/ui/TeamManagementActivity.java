@@ -2,12 +2,14 @@ package com.projects.andreafranco.workforcetracking.ui;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.projects.andreafranco.workforcetracking.R;
 
-public class TeamManagementActivity extends SingleFragmentActivity implements TeamManagementFragment.OnTeamManagementFragmentInteractionListener {
+public class TeamManagementActivity extends SingleFragmentActivity implements
+        TeamManagementFragment.OnTeamManagementFragmentInteractionListener,
+        UserListFragment.OnUserListFragmentInteractionListener,
+        UserMapFragment.OnUserMapFragmentInteractionListener{
 
     private int mUserId;
 
@@ -19,6 +21,7 @@ public class TeamManagementActivity extends SingleFragmentActivity implements Te
         }
         super.onCreate(savedInstanceState);
         setupToolbar(true);
+        setTitle(R.string.team_management);
     }
 
     @Override
@@ -45,6 +48,16 @@ public class TeamManagementActivity extends SingleFragmentActivity implements Te
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onUserItemSelected(Uri uri) {
+
+    }
+
+    @Override
+    public void onMapClick(Uri uri) {
 
     }
 }
