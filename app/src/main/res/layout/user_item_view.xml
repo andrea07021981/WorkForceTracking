@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:id="@+id/user_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    card_view:cardUseCompatPadding="true"
+    card_view:strokeColor="@color/colorPrimary"
+    card_view:strokeWidth="5dp"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="3dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin_8">
+
+        <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:padding="@dimen/activity_margin_8"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/activity_margin_8"
+            android:id="@+id/picture_imageview"
+            app:civ_border_overlay="true"
+            app:civ_border_width="2dp"
+            android:background="@drawable/circle"
+            app:civ_border_color="@color/colorPrimaryDark"
+            android:transitionName="simple_activity_transition"/>
+
+        <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
+            android:id="@+id/status_imageview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/circle"
+            android:transitionName="simple_activity_transition"
+            android:layout_marginLeft="@dimen/activity_vertical_padding_24"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_overlay="true"
+            app:civ_border_width="2dp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/picture_imageview"
+            card_view:layout_constraintRight_toRightOf="@+id/picture_imageview"/>
+
+        <TextView
+            android:id="@+id/name_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
+            card_view:layout_constraintTop_toBottomOf="@+id/name_textview" />
+
+        <ImageView
+            android:id="@+id/marker_imageview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
+            card_view:layout_constraintTop_toBottomOf="@+id/textView3"
+            card_view:srcCompat="@mipmap/ic_place" />
+
+        <TextView
+            android:id="@+id/location_textview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/activity_margin_8"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/shift_textview"
+            card_view:layout_constraintStart_toEndOf="@+id/marker_imageview"
+            card_view:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/shift_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="8dp"
+            android:text="ON SHIFT"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/textView3" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

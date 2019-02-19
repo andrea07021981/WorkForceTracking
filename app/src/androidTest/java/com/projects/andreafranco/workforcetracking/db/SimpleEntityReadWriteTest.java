@@ -43,7 +43,7 @@ public class SimpleEntityReadWriteTest {
 
     @Test
     public void writeUserAndReadInList() throws Exception {
-        UserEntity user = new UserEntity(1, "Andrea", "Franco", "Franco", "Franco", "Franco", new Date());
+        UserEntity user = new UserEntity(1, "Andrea", "Franco", "Franco", "Franco", "Franco", 1, 1, 1, ,1, new Date());
         long value = mUserDao.insertUser(user);
         LiveData<UserEntity> byName = mUserDao.getUserById(value);
         assertThat(byName.getValue(), equalTo(user));

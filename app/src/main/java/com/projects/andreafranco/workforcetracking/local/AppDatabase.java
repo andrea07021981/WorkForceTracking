@@ -14,13 +14,17 @@ import android.util.Log;
 import com.projects.andreafranco.workforcetracking.AppExecutors;
 import com.projects.andreafranco.workforcetracking.BuildConfig;
 import com.projects.andreafranco.workforcetracking.local.converter.DateConverter;
+import com.projects.andreafranco.workforcetracking.local.dao.ShiftDao;
+import com.projects.andreafranco.workforcetracking.local.dao.TeamDao;
 import com.projects.andreafranco.workforcetracking.local.dao.UserDao;
+import com.projects.andreafranco.workforcetracking.local.entity.ShiftEntity;
+import com.projects.andreafranco.workforcetracking.local.entity.TeamEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 
 import java.util.List;
 
 
-@Database(entities = {UserEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UserEntity.class, TeamEntity.class, ShiftEntity.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -51,13 +55,21 @@ public abstract class AppDatabase extends RoomDatabase {
                         super.onCreate(db);
                         executors.diskIO().execute(()-> {
                             if (BuildConfig.DEBUG) {
-                                // Add a delay to simulate a long-running operation
-                                addDelay();
                                 // Generate the data for pre-population
                                 AppDatabase database = AppDatabase.getInstance(context, executors);
-                                List<UserEntity> users = DataGenerator.generateUsers();
 
-                                insertData(database, users);
+                                //Add teams(it's a duty of server, but now we don't have ws connections already prepared)
+                                List<TeamEntity> teams = DataGenerator.generateTeams();
+                                inserTeamData(database, teams);
+
+                                //Add shifts(it's a duty of server, but now we don't have ws connections already prepared)
+                                List<ShiftEntity> shifts = DataGenerator.generateShifts();
+                                insertShiftData(database, shifts);
+
+                                //Add users
+                                List<UserEntity> users = DataGenerator.generateUsers();
+                                insertUserData(database, users);
+
                                 // notify that the database was created and it's ready to be used
                                 database.setDatabaseCreated();
                             }
@@ -85,18 +97,27 @@ public abstract class AppDatabase extends RoomDatabase {
         return mIsDatabaseCreated;
     };
 
-    private static void insertData(AppDatabase database, List<UserEntity> users) {
+    private static void insertUserData(AppDatabase database, List<UserEntity> users) {
         database.runInTransaction(()-> {
             database.userDao().insertAllUsers(users);
         });
     }
 
-    private static void addDelay() {
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException ignored) {
-        }
+    private static void inserTeamData(AppDatabase database, List<TeamEntity> teams) {
+        database.runInTransaction(()-> {
+            database.teamDao().insertAllTeams(teams);
+        });
+    }
+
+    private static void insertShiftData(AppDatabase database, List<ShiftEntity> shifts) {
+        database.runInTransaction(()-> {
+            database.shiftDao().insertAllShifts(shifts);
+        });
     }
 
     public abstract UserDao userDao();
+
+    public abstract TeamDao teamDao();
+
+    public abstract ShiftDao shiftDao();
 }
