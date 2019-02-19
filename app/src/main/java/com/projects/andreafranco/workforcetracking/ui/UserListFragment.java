@@ -1,8 +1,11 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.projects.andreafranco.workforcetracking.R;
+import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserListViewModel;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +27,7 @@ import com.projects.andreafranco.workforcetracking.R;
  */
 public class UserListFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
-    private int mParam1;
+    private int mUserId;
 
     private OnUserListFragmentInteractionListener mListener;
 
@@ -48,7 +54,7 @@ public class UserListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
+            mUserId = getArguments().getInt(ARG_PARAM1);
         }
     }
 
@@ -60,7 +66,23 @@ public class UserListFragment extends Fragment {
         RecyclerView userListRecycleView = view.findViewById(R.id.userlist_recycleview);
         //TODO create and add the adapter witn cardview
 
+        UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
+        UserViewModel mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        subscribeToModel(mUserViewModel);
         return view;
+    }
+
+    private void subscribeToModel(final UserViewModel model) {
+        model.getObservableUser().observe(this, userEntity -> {
+            model.setUser(userEntity);
+            UserListViewModel.Factory factory = new UserListViewModel.Factory(getActivity().getApplication(), mUserId, userEntity.getTeamid());
+            UserListViewModel userListViewModel = ViewModelProviders.of(getParentFragment(), factory).get(UserListViewModel.class);
+            userListViewModel.getUserTeam().observe(this, userTeams -> {
+                if (userTeams != null && userTeams.size() > 0) {
+                    //TODO update recycleview adapter. Then we'll add databinding and we'll be able to remove this section
+                }
+            });
+        });
     }
 
     @Override

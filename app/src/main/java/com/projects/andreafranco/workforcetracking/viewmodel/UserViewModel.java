@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 
 import com.projects.andreafranco.workforcetracking.BasicApp;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.model.UserTeam;
 import com.projects.andreafranco.workforcetracking.repository.DataRepository;
 
 public class UserViewModel extends AndroidViewModel {

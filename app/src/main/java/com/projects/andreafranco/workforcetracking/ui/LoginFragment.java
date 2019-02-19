@@ -94,12 +94,7 @@ public class LoginFragment extends Fragment{
 
     //TODO MOVE THIS IN EDIT/NEW USER FRAGMENT
     private void subscribeToModel(final UserViewModel model) {
-        model.getObservableUser().observe(this, new Observer<UserEntity>() {
-            @Override
-            public void onChanged(@Nullable UserEntity userEntity) {
-                model.setUser(userEntity);
-            }
-        });
+        model.getObservableUser().observe(this, userEntity -> model.setUser(userEntity));
     }
 
     @Override
@@ -131,20 +126,17 @@ public class LoginFragment extends Fragment{
     public void doLogin(String username, String password) {
         closeKeyBoard();
         mAlertDialog.show();
-        mUserViewModel.checkValidLogin(username, password).observe(this, new Observer<UserEntity>() {
-            @Override
-            public void onChanged(@Nullable UserEntity userEntity) {
-                if (userEntity != null) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-                    Intent intent = new Intent(getActivity(), DashBoardActivity.class);
-                    intent.putExtra(USER_ID, userEntity.getId());
-                    startActivity(intent, options.toBundle());
-                    Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
-                }
-                mAlertDialog.dismiss();
+        mUserViewModel.checkValidLogin(username, password).observe(this, userEntity -> {
+            if (userEntity != null) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                Intent intent = new Intent(getActivity(), DashBoardActivity.class);
+                intent.putExtra(USER_ID, userEntity.getId());
+                startActivity(intent, options.toBundle());
+                Toast.makeText(getActivity(), "Login ok", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Login error: Username or password wrong", Toast.LENGTH_SHORT).show();
             }
+            mAlertDialog.dismiss();
         });
     }
 

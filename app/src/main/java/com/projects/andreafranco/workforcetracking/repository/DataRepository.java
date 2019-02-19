@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.projects.andreafranco.workforcetracking.AppExecutors;
 import com.projects.andreafranco.workforcetracking.local.AppDatabase;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.model.UserTeam;
 
 import java.util.List;
 
@@ -56,6 +57,10 @@ public class DataRepository {
     @NonNull
     public LiveData<UserEntity> isValidAccount(@NonNull String username, @NonNull String password) {
         return mDatabase.userDao().getAccount(username, password);
+    }
+
+    public LiveData<List<UserTeam>> getUserTeam(@NonNull int teamid) {
+        return mDatabase.userTeamDao().getTeamOfUser(teamid);
     }
 
     public void insertUser(UserEntity userEntity)

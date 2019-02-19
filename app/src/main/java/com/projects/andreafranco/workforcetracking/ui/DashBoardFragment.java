@@ -111,15 +111,12 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     }
 
     private void subscribeToModel(final UserViewModel model) {
-        model.getObservableUser().observe(this, new Observer<UserEntity>() {
-            @Override
-            public void onChanged(@Nullable UserEntity userEntity) {
-                //TODO must use data binding and viewmodel
-                model.setUser(userEntity);
-                String dimensionFormat = getContext().getString(R.string.format_userinfo);
-                mUserInfoTextView.setText(String.format(dimensionFormat, userEntity.getName(), userEntity.getSurname()));
-                mUserLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
-            }
+        model.getObservableUser().observe(this, userEntity -> {
+            //TODO must use data binding and viewmodel
+            model.setUser(userEntity);
+            String dimensionFormat = getContext().getString(R.string.format_userinfo);
+            mUserInfoTextView.setText(String.format(dimensionFormat, userEntity.getName(), userEntity.getSurname()));
+            mUserLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
         });
     }
 

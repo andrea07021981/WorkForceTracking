@@ -17,6 +17,7 @@ import com.projects.andreafranco.workforcetracking.local.converter.DateConverter
 import com.projects.andreafranco.workforcetracking.local.dao.ShiftDao;
 import com.projects.andreafranco.workforcetracking.local.dao.TeamDao;
 import com.projects.andreafranco.workforcetracking.local.dao.UserDao;
+import com.projects.andreafranco.workforcetracking.local.dao.UserTeamDao;
 import com.projects.andreafranco.workforcetracking.local.entity.ShiftEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.TeamEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
@@ -120,4 +121,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TeamDao teamDao();
 
     public abstract ShiftDao shiftDao();
+
+    public abstract UserTeamDao userTeamDao();
 }

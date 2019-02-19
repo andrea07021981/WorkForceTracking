@@ -14,25 +14,25 @@ public class DataGenerator {
 
     //Users
     private static final String[] USER_NAME = new String[]{
-            "Andrea", "Pippo", "Lou"};
+            "Andrew", "Andrea", "Pippo", "Lou"};
 
     private static final String[] USER_SURNAME = new String[]{
-            "Franco", "Rossi", "Bianchi"};
+            "Frank", "Franco", "Rossi", "Bianchi"};
 
     private static final String[] USER_EMAIL = new String[]{
-            "a@a.com", "b@a.com", "c@a.com"};
+            "a@aa.com", "a@a.com", "b@a.com", "c@a.com"};
 
     private static final String[] USER_USERNAME = new String[]{
-            "Andrea", "Pippo", "Lou"};
+            "a", "Andrea", "Pippo", "Lou"};
 
     private static final String[] USER_PSW = new String[]{
-            "andrea", "pippo", "lou"};
+            "a", "andrea", "pippo", "lou"};
 
     private static final int[] USER_TEAM = new int[]{
-            1,2,3};
+            1,1,1,1};
 
     private static final int[] USER_SHIFT = new int[]{
-            1,2,3};
+            1,1,2,3};
 
     //Teams
     private static final String[] TEAM_NAME = new String[]{
