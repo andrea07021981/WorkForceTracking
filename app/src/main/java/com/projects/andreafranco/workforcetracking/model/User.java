@@ -1,5 +1,6 @@
 package com.projects.andreafranco.workforcetracking.model;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 
 import java.util.Date;
@@ -12,5 +13,7 @@ public interface User {
     String getEmail();
     byte[] getImage();
     String getPassword();
+    Double getLatitude();
+    Double getLongitude();
     Date getUpdatedAt();
 }

@@ -153,6 +153,8 @@ public class SignUpFragment extends Fragment {
                     mEmailEditText.getText().toString(),
                     mPasswordEditText.getText().toString(),
                     imageData,
+                    0.0,
+                    0.0,
                     new Date()));
             mAlertDialog.dismiss();
             mListener.onSavedUser();

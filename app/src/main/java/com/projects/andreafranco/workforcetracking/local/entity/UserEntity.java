@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.location.Location;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
@@ -43,11 +44,19 @@ public class UserEntity implements User {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 
+    @NonNull
+    @SerializedName("latitude")
+    private Double latitude;
+
+    @NonNull
+    @SerializedName("longitude")
+    private Double longitude;
+
     @ColumnInfo(name="updated_at")
     private Date updatedAt;
 
     @Ignore
-    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Date updatedAt) {
+    public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Double latitude, Double longitude, Date updatedAt) {
         this.name = name;
         this.surname = surname;
         this.username= username;
@@ -55,9 +64,11 @@ public class UserEntity implements User {
         this.password = password;
         this.updatedAt = updatedAt;
         this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public UserEntity(int id, @NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Date updatedAt) {
+    public UserEntity(int id, @NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Double latitude, Double longitude, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -66,6 +77,8 @@ public class UserEntity implements User {
         this.password = password;
         this.image = image;
         this.updatedAt = updatedAt;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
@@ -127,6 +140,18 @@ public class UserEntity implements User {
     @NonNull
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    @NonNull
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    @Override
+    @NonNull
+    public Double getLongitude() {
+        return longitude;
     }
 
     public void setPassword(@NonNull String password) {
