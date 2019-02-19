@@ -1,75 +1,68 @@
 package com.projects.andreafranco.workforcetracking.ui.component;
 
 import android.media.Image;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.projects.andreafranco.workforcetracking.R;
-import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
-import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
+import com.projects.andreafranco.workforcetracking.model.UserTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/*public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleViewAdapter.TeamViewHolder> {
-    private List<UserEntity> mImageList;
+public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleViewAdapter.TeamViewHolder> {
+    private List<UserTeam> mUserTeamList;
 
-    public TeamRecycleViewAdapter(List<UserEntity> imageList) {
-        mImageList = imageList;
+    public TeamRecycleViewAdapter(List<UserTeam> userTeamList) {
+        mUserTeamList = userTeamList;
     }
 
     @Override
     public void onBindViewHolder(TeamViewHolder holder, int position) {
-        UserEntity image = mImageList.get(position);
-        holder.bindTeamVierwHolder(image);
+        UserTeam userTeam = mUserTeamList.get(position);
+        holder.bindTeamVierwHolder(userTeam);
     }
 
     @Override
     public int getItemCount() {
-        return mImageList.size();
+        return mUserTeamList.size();
     }
 
     @Override
     public TeamViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_image,parent, false);
+                .inflate(R.layout.user_item_view,parent, false);
         return new TeamViewHolder(v);
     }
 
-    *//**
+    /**
      * View holder class
-     * *//*
+     */
     public class TeamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView mImageImageVIew;
-        TextView mTitleTextView;
-        TextView mSizeTextView;
-        TextView mDimensionsTextView;
-        UserEntity mImage;
+        ImageView mStatusImageVIew;
+        TextView mNameTextView;
+        TextView mFunctionTextView;
+        TextView mLocationTextView;
+        TextView mShiftTextView;
+        UserTeam mUserTeam;
 
         public TeamViewHolder(View view) {
             super(view);
-            mImageImageVIew = (ImageView) view.findViewById(R.id.image_image_view);
-            mTitleTextView = (TextView) view.findViewById(R.id.title_text_view);
-            mSizeTextView = (TextView) view.findViewById(R.id.size_text_view);
-            mDimensionsTextView = (TextView) view.findViewById(R.id.dimensions_text_view);
+            mImageImageVIew = (ImageView) view.findViewById(R.id.picture_imageview);
+            mStatusImageVIew = (ImageView) view.findViewById(R.id.status_imageview);
+            mNameTextView = (TextView) view.findViewById(R.id.name_textview);
+            mFunctionTextView = (TextView) view.findViewById(R.id.function_textview);
+            mLocationTextView = (TextView) view.findViewById(R.id.location_textview);
+            mShiftTextView = (TextView) view.findViewById(R.id.shift_textview);
         }
 
-        public void bindTeamVierwHolder(UserEntity image) {
-            mImage = image;
-            mImageImageVIew.setImageBitmap(mImage.getImage());
-            mTitleTextView.setText(mImage.getTitle());
-            String sizeFormat = itemView.getContext().getString(R.string.format_size);
-            mSizeTextView.setText(String.format(sizeFormat, mImage.getSize()/1024L));
-            String dimensionFormat = itemView.getContext().getString(R.string.format_dimensions);
-            mDimensionsTextView.setText(String.format(dimensionFormat, mImage.getWidth(), mImage.getHeight()));
+        public void bindTeamVierwHolder(UserTeam userTeam) {
+            mUserTeam = userTeam;
         }
 
         @Override
@@ -78,25 +71,25 @@ import java.util.List;
         }
     }
 
-    *//**
+    /**
      * Clears all items from the data set.
-     *//*
+      */
     public void clear(){
-        if(mImageList != null){
-            mImageList.clear();
+        if(mUserTeamList != null){
+            mUserTeamList.clear();
             notifyDataSetChanged();
         }
     }
 
-    *//**
+    /*
      * Adds all of the items to the data set.
      * @param items The item array to be added.
-     *//*
-    public void addAll(List<Image> items){
-        if(mImageList == null){
-            mImageList = new ArrayList<>();
+     */
+    public void addAll(List<UserTeam> items){
+        if(mUserTeamList == null){
+            mUserTeamList = new ArrayList<>();
         }
-        mImageList.addAll(items);
+        mUserTeamList.addAll(items);
         notifyDataSetChanged();
     }
-}*/
+}

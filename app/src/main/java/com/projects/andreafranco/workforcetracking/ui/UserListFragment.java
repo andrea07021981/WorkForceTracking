@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,14 @@ import android.view.ViewGroup;
 
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
+import com.projects.andreafranco.workforcetracking.model.UserTeam;
+import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
+import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
+import com.projects.andreafranco.workforcetracking.ui.component.TeamRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserListViewModel;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +35,7 @@ import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 public class UserListFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private int mUserId;
+    private RecyclerView mRecyclerView;
 
     private OnUserListFragmentInteractionListener mListener;
 
@@ -63,8 +71,12 @@ public class UserListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_user_list, container, false);
-        RecyclerView userListRecycleView = view.findViewById(R.id.userlist_recycleview);
-        //TODO create and add the adapter witn cardview
+        mRecyclerView = view.findViewById(R.id.userlist_recycleview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        TeamRecycleViewAdapter teamRecycleViewAdapter = new TeamRecycleViewAdapter(new ArrayList<UserTeam>());
+        mRecyclerView.setAdapter(teamRecycleViewAdapter);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        mRecyclerView.addItemDecoration(decoration);
 
         UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
         UserViewModel mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
@@ -80,6 +92,7 @@ public class UserListFragment extends Fragment {
             userListViewModel.getUserTeam().observe(this, userTeams -> {
                 if (userTeams != null && userTeams.size() > 0) {
                     //TODO update recycleview adapter. Then we'll add databinding and we'll be able to remove this section
+                    ((TeamRecycleViewAdapter) mRecyclerView.getAdapter()).addAll(userTeams);
                 }
             });
         });

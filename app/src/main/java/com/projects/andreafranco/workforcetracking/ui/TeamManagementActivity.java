@@ -21,7 +21,7 @@ public class TeamManagementActivity extends SingleFragmentActivity implements
         }
         super.onCreate(savedInstanceState);
         setupToolbar(true);
-        setTitle(R.string.team_management);
+        setTitle(R.string.my_team);
     }
 
     @Override
