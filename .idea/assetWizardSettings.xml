@@ -18,23 +18,12 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="clipArt">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="color" value="ffffff" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
                                       <entry key="clipartAsset">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_map_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_place_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,10 +33,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="backgroundColor" value="000000" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="NONE" />
                                       <entry key="imageAsset" value="$USER_HOME$/Desktop/edit.png" />
-                                      <entry key="outputName" value="ic_map" />
+                                      <entry key="outputName" value="ic_place" />
                                     </map>
                                   </option>
                                 </PersistentState>
