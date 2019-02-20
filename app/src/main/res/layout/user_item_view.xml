@@ -37,8 +37,8 @@
 
         <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
             android:id="@+id/status_imageview"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/circle"
             android:transitionName="simple_activity_transition"
@@ -57,8 +57,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="TextView"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold|italic"
+            android:textSize="20sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
             card_view:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="29dp"
             android:layout_marginEnd="8dp"
+            android:textStyle="bold"
             android:text="ON SHIFT"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"

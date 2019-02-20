@@ -89,6 +89,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
             mNameTextView.setText(String.format(dimensionFormat, userTeam.name, userTeam.surname));
             mFunctionTextView.setText(userTeam.userFunction);
             getAddressLocation(userTeam.latitude, userTeam.longitude);
+            mShiftTextView.setText(userTeam.shift.toUpperCase());
         }
 
         private void getAddressLocation(Double latitude, Double longitude) {
