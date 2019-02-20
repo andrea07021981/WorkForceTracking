@@ -31,7 +31,7 @@ public class UserListViewModel extends AndroidViewModel {
         mObservableUsers.setValue(null);
 
         LiveData<List<UserEntity>> users = mRepository.getUsers();
-        LiveData<List<UserTeam>> team = mRepository.getUserTeam(teamId);
+        LiveData<List<UserTeam>> team = mRepository.getUserTeam(teamId, userId);
 
         // observe the changes of the users from the database and forward them
         mObservableUsers.addSource(users, mObservableUsers::setValue);

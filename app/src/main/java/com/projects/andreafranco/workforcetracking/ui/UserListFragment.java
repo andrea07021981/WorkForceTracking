@@ -73,7 +73,7 @@ public class UserListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_user_list, container, false);
         mRecyclerView = view.findViewById(R.id.userlist_recycleview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        TeamRecycleViewAdapter teamRecycleViewAdapter = new TeamRecycleViewAdapter(new ArrayList<UserTeam>());
+        TeamRecycleViewAdapter teamRecycleViewAdapter = new TeamRecycleViewAdapter(new ArrayList<UserTeam>(), getActivity());
         mRecyclerView.setAdapter(teamRecycleViewAdapter);
         SpacesItemDecoration decoration = new SpacesItemDecoration(16);
         mRecyclerView.addItemDecoration(decoration);

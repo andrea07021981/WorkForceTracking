@@ -59,8 +59,8 @@ public class DataRepository {
         return mDatabase.userDao().getAccount(username, password);
     }
 
-    public LiveData<List<UserTeam>> getUserTeam(@NonNull int teamid) {
-        return mDatabase.userTeamDao().getTeamOfUser(teamid);
+    public LiveData<List<UserTeam>> getUserTeam(@NonNull int teamid, @NonNull int userID) {
+        return mDatabase.userTeamDao().getTeamOfUser(teamid, userID);
     }
 
     public void insertUser(UserEntity userEntity)

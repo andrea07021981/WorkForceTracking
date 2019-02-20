@@ -3,9 +3,8 @@ package com.projects.andreafranco.workforcetracking.model;
 /**
  * Class populated by the web server. It's a registry class
  */
-public interface Shift {
+public interface Function {
 
     int getId();
     String getName();
-    int getStatus();
 }

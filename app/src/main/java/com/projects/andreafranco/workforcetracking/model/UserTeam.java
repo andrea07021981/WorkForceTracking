@@ -9,4 +9,6 @@ public class UserTeam {
     public Double longitude;
     public String team;
     public String shift;
+    public int shiftStatus;
+    public String userFunction;
 }

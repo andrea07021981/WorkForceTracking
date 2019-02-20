@@ -6,7 +6,6 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.location.Location;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
@@ -14,10 +13,11 @@ import com.projects.andreafranco.workforcetracking.model.User;
 
 import java.util.Date;
 
-@Entity(tableName = "users", indices = {@Index(value="teamid"),@Index(value="shiftid")},
+@Entity(tableName = "users", indices = {@Index(value="teamid"),@Index(value="shiftid"),@Index(value="functionid")},
         foreignKeys = {
             @ForeignKey(entity = TeamEntity.class, parentColumns = "id", childColumns = "teamid", onDelete = ForeignKey.NO_ACTION),
-            @ForeignKey(entity = ShiftEntity.class, parentColumns = "id", childColumns = "shiftid", onDelete = ForeignKey.NO_ACTION)})
+            @ForeignKey(entity = ShiftEntity.class, parentColumns = "id", childColumns = "shiftid", onDelete = ForeignKey.NO_ACTION),
+            @ForeignKey(entity = FunctionEntity.class, parentColumns = "id", childColumns = "functionid", onDelete = ForeignKey.NO_ACTION)})
 
 public class UserEntity implements User {
 
@@ -63,11 +63,16 @@ public class UserEntity implements User {
     private int teamid;
 
     @NonNull
+    @SerializedName("functionid")
+    private int functionid;
+
+    @NonNull
     @SerializedName("shiftid")
     private int shiftid;
 
     @ColumnInfo(name="updated_at")
     private Date updatedAt;
+
 
     @Ignore
     public UserEntity(@NonNull String name, @NonNull String surname, @NonNull String username, @NonNull String email, @NonNull String password, byte[] image, Double latitude, Double longitude, Date updatedAt) {
@@ -93,6 +98,7 @@ public class UserEntity implements User {
                       Double longitude,
                       int teamid,
                       int shiftid,
+                      int functionid,
                       Date updatedAt) {
         this.id = id;
         this.name = name;
@@ -106,6 +112,7 @@ public class UserEntity implements User {
         this.longitude = longitude;
         this.teamid = teamid;
         this.shiftid = shiftid;
+        this.functionid = functionid;
     }
 
     @Override
@@ -179,6 +186,11 @@ public class UserEntity implements User {
     @NonNull
     public Double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public int getFunctionid() {
+        return functionid;
     }
 
     @Override

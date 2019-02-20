@@ -14,10 +14,12 @@ import android.util.Log;
 import com.projects.andreafranco.workforcetracking.AppExecutors;
 import com.projects.andreafranco.workforcetracking.BuildConfig;
 import com.projects.andreafranco.workforcetracking.local.converter.DateConverter;
+import com.projects.andreafranco.workforcetracking.local.dao.FunctionDao;
 import com.projects.andreafranco.workforcetracking.local.dao.ShiftDao;
 import com.projects.andreafranco.workforcetracking.local.dao.TeamDao;
 import com.projects.andreafranco.workforcetracking.local.dao.UserDao;
 import com.projects.andreafranco.workforcetracking.local.dao.UserTeamDao;
+import com.projects.andreafranco.workforcetracking.local.entity.FunctionEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.ShiftEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.TeamEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
@@ -25,7 +27,7 @@ import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import java.util.List;
 
 
-@Database(entities = {UserEntity.class, TeamEntity.class, ShiftEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UserEntity.class, TeamEntity.class, ShiftEntity.class, FunctionEntity.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -66,6 +68,11 @@ public abstract class AppDatabase extends RoomDatabase {
                                 //Add shifts(it's a duty of server, but now we don't have ws connections already prepared)
                                 List<ShiftEntity> shifts = DataGenerator.generateShifts();
                                 insertShiftData(database, shifts);
+
+
+                                //Add funcions
+                                List<FunctionEntity> functions = DataGenerator.generateFunctions();
+                                insertFunctionData(database, functions);
 
                                 //Add users
                                 List<UserEntity> users = DataGenerator.generateUsers();
@@ -116,6 +123,12 @@ public abstract class AppDatabase extends RoomDatabase {
         });
     }
 
+    private static void insertFunctionData(AppDatabase database, List<FunctionEntity> functions) {
+        database.runInTransaction(()-> {
+            database.functionDao().insertAllFunctions(functions);
+        });
+    }
+
     public abstract UserDao userDao();
 
     public abstract TeamDao teamDao();
@@ -123,4 +136,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ShiftDao shiftDao();
 
     public abstract UserTeamDao userTeamDao();
+
+    public abstract FunctionDao functionDao();
 }

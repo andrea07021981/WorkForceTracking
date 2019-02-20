@@ -1,24 +1,44 @@
 package com.projects.andreafranco.workforcetracking.ui.component;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.location.Address;
 import android.media.Image;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.projects.andreafranco.workforcetracking.Handler.GeocoderHandler;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.UserTeam;
+import com.projects.andreafranco.workforcetracking.util.GeoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.projects.andreafranco.workforcetracking.BuildConfig.DEBUG;
 
 public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleViewAdapter.TeamViewHolder> {
     private List<UserTeam> mUserTeamList;
+    private Context mContext;
 
-    public TeamRecycleViewAdapter(List<UserTeam> userTeamList) {
+    public TeamRecycleViewAdapter(List<UserTeam> userTeamList, Context context) {
         mUserTeamList = userTeamList;
+        mContext = context;
     }
 
     @Override
@@ -42,7 +62,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
     /**
      * View holder class
      */
-    public class TeamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class TeamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, GeocoderHandler.OnHandleMessageListener{
         ImageView mImageImageVIew;
         ImageView mStatusImageVIew;
         TextView mNameTextView;
@@ -63,11 +83,47 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
 
         public void bindTeamVierwHolder(UserTeam userTeam) {
             mUserTeam = userTeam;
+            mImageImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length));
+            setShiftStatus(userTeam.shiftStatus);
+            String dimensionFormat = mContext.getString(R.string.format_userinfo);
+            mNameTextView.setText(String.format(dimensionFormat, userTeam.name, userTeam.surname));
+            mFunctionTextView.setText(userTeam.userFunction);
+            getAddressLocation(userTeam.latitude, userTeam.longitude);
+        }
+
+        private void getAddressLocation(Double latitude, Double longitude) {
+            GeoUtils.getAddressFromLocation(
+                    latitude,
+                    longitude,
+                    mContext,
+                    new GeocoderHandler(this));
+        }
+
+        private void setShiftStatus(int shiftStatusId) {
+            switch (shiftStatusId) {
+                case 0://Negative
+                    mStatusImageVIew.setColorFilter(Color.RED);
+                    break;
+                case 1://Positive
+                    mStatusImageVIew.setColorFilter(Color.GREEN);
+                    break;
+                case 2://Neutral
+                    mStatusImageVIew.setColorFilter(Color.GRAY);
+                    break;
+                default:
+                    mStatusImageVIew.setColorFilter(Color.GRAY);
+                    break;
+            }
         }
 
         @Override
         public void onClick(View v) {
             //TODO action on click
+        }
+
+        @Override
+        public void handleAddress(String address) {
+            mLocationTextView.setText(address);
         }
     }
 

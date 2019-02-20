@@ -16,10 +16,11 @@ import java.util.List;
 @Dao
 public interface UserTeamDao {
 
-    @Query("SELECT users.name AS username, users.surname AS surname, users.image AS image, users.latitude AS latitude, users.longitude AS longitude, teams.name AS team, shifts.name AS shift " +
+    @Query("SELECT users.name AS name, users.surname AS surname, users.image AS image, users.latitude AS latitude, users.longitude AS longitude, teams.name AS team, shifts.name AS shift, shifts.status AS shiftStatus, functions.name AS userFunction " +
             "FROM users " +
             "INNER JOIN teams ON users.teamid = teams.id " +
             "INNER JOIN shifts on users.shiftid = shifts.id " +
-            "WHERE teams.id = :teamId")
-    LiveData<List<UserTeam>> getTeamOfUser(int teamId);
+            "INNER JOIN functions on users.functionid = functions.id " +
+            "WHERE teams.id = :teamId AND users.id <> :userId")
+    LiveData<List<UserTeam>> getTeamOfUser(int teamId, int userId);
 }

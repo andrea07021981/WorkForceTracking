@@ -7,11 +7,11 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
+import com.projects.andreafranco.workforcetracking.model.Function;
 import com.projects.andreafranco.workforcetracking.model.Shift;
-import com.projects.andreafranco.workforcetracking.model.Team;
 
-@Entity(tableName = "shifts", indices = {@Index("id")})
-public class ShiftEntity implements Shift {
+@Entity(tableName = "functions", indices = {@Index("id")})
+public class FunctionEntity implements Function {
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
@@ -21,21 +21,15 @@ public class ShiftEntity implements Shift {
     @SerializedName("name")
     private String name;
 
-    @NonNull
-    @SerializedName("status")
-    private int status;
-
     @Ignore
-    public ShiftEntity(@NonNull String name) {
+    public FunctionEntity(@NonNull String name) {
         this.name = name;
     }
 
-    public ShiftEntity(int id,
-                       @NonNull String name,
-                       @NonNull int status) {
+    public FunctionEntity(int id,
+                          @NonNull String name) {
         this.id = id;
         this.name = name;
-        this.status = status;
     }
 
     @Override
@@ -46,10 +40,5 @@ public class ShiftEntity implements Shift {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
     }
 }

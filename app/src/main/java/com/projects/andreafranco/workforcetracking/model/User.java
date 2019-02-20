@@ -15,6 +15,7 @@ public interface User {
     String getPassword();
     Double getLatitude();
     Double getLongitude();
+    int getFunctionid();
     int getTeamid();
     int getShiftid();
     Date getUpdatedAt();
