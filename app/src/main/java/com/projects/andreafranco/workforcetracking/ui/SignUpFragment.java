@@ -204,7 +204,7 @@ public class SignUpFragment extends Fragment {
         return Color.argb(alpha, red, green, blue);
     }
 
-    public static byte[] bitmapAsByteArray(Bitmap bitmap) {
+    private static byte[] bitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream output= new ByteArrayOutputStream(); bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
         return output.toByteArray();
     }

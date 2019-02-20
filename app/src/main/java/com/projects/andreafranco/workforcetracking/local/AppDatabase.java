@@ -75,7 +75,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                 insertFunctionData(database, functions);
 
                                 //Add users
-                                List<UserEntity> users = DataGenerator.generateUsers();
+                                List<UserEntity> users = DataGenerator.generateUsers(context);
                                 insertUserData(database, users);
 
                                 // notify that the database was created and it's ready to be used
