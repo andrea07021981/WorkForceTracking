@@ -15,7 +15,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/circle"
-        android:transitionName="simple_activity_transition"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_overlay="true"
         app:civ_border_width="2dp" />

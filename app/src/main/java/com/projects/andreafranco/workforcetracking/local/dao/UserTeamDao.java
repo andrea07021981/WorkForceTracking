@@ -16,7 +16,7 @@ import java.util.List;
 @Dao
 public interface UserTeamDao {
 
-    @Query("SELECT users.name AS name, users.surname AS surname, users.image AS image, users.latitude AS latitude, users.longitude AS longitude, teams.name AS team, shifts.name AS shift, shifts.status AS shiftStatus, functions.name AS userFunction " +
+    @Query("SELECT users.id AS id, users.name AS name, users.surname AS surname, users.image AS image, users.latitude AS latitude, users.longitude AS longitude, teams.name AS team, shifts.name AS shift, shifts.status AS shiftStatus, functions.name AS userFunction " +
             "FROM users " +
             "INNER JOIN teams ON users.teamid = teams.id " +
             "INNER JOIN shifts on users.shiftid = shifts.id " +

@@ -39,7 +39,10 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ui.TeamManagementActivity"
-            android:theme="@style/AppThemeExplode" />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.UserDetailsActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

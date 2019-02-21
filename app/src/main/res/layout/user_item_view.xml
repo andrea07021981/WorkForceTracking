@@ -27,13 +27,13 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/circle"
             android:padding="@dimen/activity_margin_8"
-            android:transitionName="simple_activity_transition"
             app:civ_border_color="@color/colorPrimaryDark"
             app:civ_border_overlay="true"
             app:civ_border_width="2dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintTop_toTopOf="parent"
+            android:transitionName="userProfile"/>
 
         <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
             android:id="@+id/status_imageview"
@@ -41,7 +41,6 @@
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/circle"
-            android:transitionName="simple_activity_transition"
             android:layout_marginLeft="@dimen/activity_vertical_padding_24"
             app:civ_border_color="@color/colorPrimaryDark"
             app:civ_border_overlay="true"

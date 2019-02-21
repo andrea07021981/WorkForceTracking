@@ -2,6 +2,7 @@ package com.projects.andreafranco.workforcetracking.model;
 
 public class UserTeam {
 
+    public int id;
     public String name;
     public String surname;
     public byte[] image;

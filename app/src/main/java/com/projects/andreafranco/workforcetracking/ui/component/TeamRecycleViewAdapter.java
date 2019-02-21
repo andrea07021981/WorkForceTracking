@@ -1,26 +1,16 @@
 package com.projects.andreafranco.workforcetracking.ui.component;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Address;
-import android.media.Image;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.projects.andreafranco.workforcetracking.Handler.GeocoderHandler;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.UserTeam;
@@ -28,17 +18,20 @@ import com.projects.andreafranco.workforcetracking.util.GeoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static com.projects.andreafranco.workforcetracking.BuildConfig.DEBUG;
 
 public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleViewAdapter.TeamViewHolder> {
     private List<UserTeam> mUserTeamList;
     private Context mContext;
+    OnUserIterationListener mListener;
 
-    public TeamRecycleViewAdapter(List<UserTeam> userTeamList, Context context) {
+    public interface OnUserIterationListener {
+        void onUserSelected(int userId, View view);
+    }
+
+    public TeamRecycleViewAdapter(List<UserTeam> userTeamList, Context context, OnUserIterationListener listener) {
         mUserTeamList = userTeamList;
         mContext = context;
+        mListener = listener;
     }
 
     @Override
@@ -63,7 +56,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
      * View holder class
      */
     public class TeamViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, GeocoderHandler.OnHandleMessageListener{
-        ImageView mImageImageVIew;
+        ImageView mPictureImageVIew;
         ImageView mStatusImageVIew;
         TextView mNameTextView;
         TextView mFunctionTextView;
@@ -73,7 +66,8 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
 
         public TeamViewHolder(View view) {
             super(view);
-            mImageImageVIew = (ImageView) view.findViewById(R.id.picture_imageview);
+            view.setOnClickListener(this);
+            mPictureImageVIew = (ImageView) view.findViewById(R.id.picture_imageview);
             mStatusImageVIew = (ImageView) view.findViewById(R.id.status_imageview);
             mNameTextView = (TextView) view.findViewById(R.id.name_textview);
             mFunctionTextView = (TextView) view.findViewById(R.id.function_textview);
@@ -83,7 +77,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
 
         public void bindTeamVierwHolder(UserTeam userTeam) {
             mUserTeam = userTeam;
-            mImageImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length));
+            mPictureImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length));
             setShiftStatus(userTeam.shiftStatus);
             String dimensionFormat = mContext.getString(R.string.format_userinfo);
             mNameTextView.setText(String.format(dimensionFormat, userTeam.name, userTeam.surname));
@@ -119,7 +113,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
 
         @Override
         public void onClick(View v) {
-            //TODO action on click
+            mListener.onUserSelected(mUserTeam.id, mPictureImageVIew);
         }
 
         @Override
