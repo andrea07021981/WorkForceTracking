@@ -33,7 +33,7 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            android:transitionName="userProfile"/>
+            android:transitionName="profile"/>
 
         <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
             android:id="@+id/status_imageview"
@@ -46,7 +46,8 @@
             app:civ_border_overlay="true"
             app:civ_border_width="2dp"
             card_view:layout_constraintBottom_toBottomOf="@+id/picture_imageview"
-            card_view:layout_constraintRight_toRightOf="@+id/picture_imageview"/>
+            card_view:layout_constraintRight_toRightOf="@+id/picture_imageview"
+            android:transitionName="status"/>
 
         <TextView
             android:id="@+id/name_textview"
@@ -60,7 +61,8 @@
             android:textSize="20sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
-            card_view:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintTop_toTopOf="parent"
+            android:transitionName="name"/>
 
         <TextView
             android:id="@+id/function_textview"
@@ -72,7 +74,8 @@
             android:text="TextView"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/picture_imageview"
-            card_view:layout_constraintTop_toBottomOf="@+id/name_textview" />
+            card_view:layout_constraintTop_toBottomOf="@+id/name_textview"
+            android:transitionName="function"/>
 
         <ImageView
             android:id="@+id/marker_imageview"

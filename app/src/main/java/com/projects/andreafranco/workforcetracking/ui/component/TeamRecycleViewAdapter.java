@@ -25,7 +25,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
     OnUserIterationListener mListener;
 
     public interface OnUserIterationListener {
-        void onUserSelected(int userId, View view);
+        void onUserSelected(UserTeam mUserTeam, Pair<View, String>... p);
     }
 
     public TeamRecycleViewAdapter(List<UserTeam> userTeamList, Context context, OnUserIterationListener listener) {
@@ -113,7 +113,11 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
 
         @Override
         public void onClick(View v) {
-            mListener.onUserSelected(mUserTeam.id, mPictureImageVIew);
+            Pair<View, String> p1 = Pair.create(mPictureImageVIew, "profile");
+            Pair<View, String> p2 = Pair.create(mNameTextView, "name");
+            Pair<View, String> p3 = Pair.create(mFunctionTextView, "function");
+            Pair<View, String> p4 = Pair.create(mStatusImageVIew, "status");
+            mListener.onUserSelected(mUserTeam, p1, p2, p3, p4);
         }
 
         @Override

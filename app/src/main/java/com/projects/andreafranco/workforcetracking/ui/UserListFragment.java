@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -18,9 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.projects.andreafranco.workforcetracking.R;
-import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import com.projects.andreafranco.workforcetracking.model.UserTeam;
-import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
 import com.projects.andreafranco.workforcetracking.ui.component.TeamRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserListViewModel;
@@ -40,6 +39,7 @@ import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_
  */
 public class UserListFragment extends Fragment implements TeamRecycleViewAdapter.OnUserIterationListener {
     private static final String ARG_PARAM1 = "param1";
+    private static final String USER_TEAM = "user_team";
     private int mUserId;
     private RecyclerView mRecyclerView;
 
@@ -122,13 +122,12 @@ public class UserListFragment extends Fragment implements TeamRecycleViewAdapter
     }
 
     @Override
-    public void onUserSelected(int userId, View view) {
+    public void onUserSelected(UserTeam mUserTeam, Pair<View, String>... p) {
         Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
-        intent.putExtra(USER_ID, userId);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                getActivity(),
-                view,
-                ViewCompat.getTransitionName(view));
+        Bundle args = new Bundle();
+        args.putParcelable(USER_TEAM, mUserTeam);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), p[0], p[1], p[2], p[3]);
         startActivity(intent, options.toBundle());
     }
 
