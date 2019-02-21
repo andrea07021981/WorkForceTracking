@@ -48,7 +48,6 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private int mUserId;
     private GoogleMap mGoogleMap;
-    List<Marker> mMarkers = new ArrayList<>();
     private AppCompatActivity mContext;
 
     private static final float DEFAULT_ZOOM_LEVEL = 15;

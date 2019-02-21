@@ -39,7 +39,7 @@ import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_
  */
 public class UserListFragment extends Fragment implements TeamRecycleViewAdapter.OnUserIterationListener {
     private static final String ARG_PARAM1 = "param1";
-    private static final String USER_TEAM = "user_team";
+    public static final String USER_TEAM = "user_team";
     private int mUserId;
     private RecyclerView mRecyclerView;
 

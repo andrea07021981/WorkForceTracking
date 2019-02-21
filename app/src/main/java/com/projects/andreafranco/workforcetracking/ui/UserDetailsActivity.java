@@ -4,18 +4,23 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.view.Window;
 
 import com.projects.andreafranco.workforcetracking.R;
+import com.projects.andreafranco.workforcetracking.model.UserTeam;
+
+import static com.projects.andreafranco.workforcetracking.ui.UserListFragment.USER_TEAM;
 
 public class UserDetailsActivity extends SingleFragmentActivity implements UserDetailsFragment.OnUserDetailsFragmentInteractionListener {
 
-    private int mUserId;
+    private UserTeam mUserTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mUserId = extras.getInt(LoginFragment.USER_ID);
+            mUserTeam = extras.getParcelable(USER_TEAM);
         }
         super.onCreate(savedInstanceState);
         setupToolbar(true);
@@ -28,7 +33,7 @@ public class UserDetailsActivity extends SingleFragmentActivity implements UserD
 
     @Override
     protected Fragment createFragment() {
-        return UserDetailsFragment.newInstance(mUserId);
+        return UserDetailsFragment.newInstance(mUserTeam);
     }
 
     @Override
