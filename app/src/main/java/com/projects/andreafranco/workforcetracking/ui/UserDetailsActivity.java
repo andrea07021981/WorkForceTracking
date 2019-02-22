@@ -1,6 +1,7 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class UserDetailsActivity extends SingleFragmentActivity implements UserD
     }
 
     public void onBackPressed() {
-        finish();
+        ActivityCompat.finishAfterTransition(this);
     }
 
     @Override
