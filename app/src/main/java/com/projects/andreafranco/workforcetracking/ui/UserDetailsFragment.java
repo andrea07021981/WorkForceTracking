@@ -116,6 +116,9 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
                 mNameTextView.setText(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
                 mFuncionTextView.setText(mUserTeam.userFunction);
                 setShiftStatus(mUserTeam.shiftStatus, mStatusImageView);
+
+                //Locate last user position
+                updateMap();
             }
         });
     }
@@ -156,7 +159,6 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
         UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserTeam.id);
         UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
         subscribeToModel(userViewModel);
-        updateMap();
     }
 
     /**
