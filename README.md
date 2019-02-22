@@ -12,6 +12,7 @@ not yet implemented.
 <img align="left" width="350" height="600" src="dashboard.png">
 
 <img align="left" width="350" height="600" src="drawer.png">
+<img align="left" width="350" height="600" src="examplegif.gif">
 
 
 
