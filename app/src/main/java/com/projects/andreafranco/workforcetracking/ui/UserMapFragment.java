@@ -148,10 +148,10 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback {
 
     private LatLng addUserMarker(UserTeam user) {
         LatLng userLocation = new LatLng(user.latitude, user.longitude);
-        String dimensionFormat = mContext.getString(R.string.format_userinfo);
+        String nameSurnameFormat = mContext.getString(R.string.format_userinfo);
         MarkerOptions riderRequestMarker = new MarkerOptions();
         riderRequestMarker.position(userLocation);
-        riderRequestMarker.title(String.format(dimensionFormat, user.name, user.surname));
+        riderRequestMarker.title(String.format(nameSurnameFormat, user.name, user.surname));
         riderRequestMarker.anchor(0.5f, 0.5f);
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(user.image, 0, user.image.length);

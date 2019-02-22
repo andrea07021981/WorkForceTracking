@@ -114,8 +114,8 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
         model.getObservableUser().observe(this, userEntity -> {
             //TODO must use data binding and viewmodel
             model.setUser(userEntity);
-            String dimensionFormat = getContext().getString(R.string.format_userinfo);
-            mUserInfoTextView.setText(String.format(dimensionFormat, userEntity.getName(), userEntity.getSurname()));
+            String nameSurnameFormat = getContext().getString(R.string.format_userinfo);
+            mUserInfoTextView.setText(String.format(nameSurnameFormat, userEntity.getName(), userEntity.getSurname()));
             mUserLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
         });
     }

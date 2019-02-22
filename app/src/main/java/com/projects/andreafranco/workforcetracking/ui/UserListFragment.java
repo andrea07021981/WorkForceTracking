@@ -126,6 +126,7 @@ public class UserListFragment extends Fragment implements TeamRecycleViewAdapter
         Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
         Bundle args = new Bundle();
         args.putParcelable(USER_TEAM, mUserTeam);
+        intent.putExtras(args);
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), p[0], p[1], p[2], p[3]);
         startActivity(intent, options.toBundle());

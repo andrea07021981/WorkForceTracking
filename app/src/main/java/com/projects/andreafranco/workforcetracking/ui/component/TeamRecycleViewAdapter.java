@@ -79,8 +79,8 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
             mUserTeam = userTeam;
             mPictureImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length));
             setShiftStatus(userTeam.shiftStatus);
-            String dimensionFormat = mContext.getString(R.string.format_userinfo);
-            mNameTextView.setText(String.format(dimensionFormat, userTeam.name, userTeam.surname));
+            String nameSurnameFormat = mContext.getString(R.string.format_userinfo);
+            mNameTextView.setText(String.format(nameSurnameFormat, userTeam.name, userTeam.surname));
             mFunctionTextView.setText(userTeam.userFunction);
             getAddressLocation(userTeam.latitude, userTeam.longitude);
             mShiftTextView.setText(userTeam.shift.toUpperCase());

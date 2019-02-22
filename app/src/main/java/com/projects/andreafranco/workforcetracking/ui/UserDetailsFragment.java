@@ -1,6 +1,9 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,9 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.UserTeam;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
@@ -27,6 +36,7 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
     private UserTeam mUserTeam;
     private GoogleMap mGoogleMap;
     private AppCompatActivity mContext;
+    String mNameSurnameFormat;
 
     private static final float DEFAULT_ZOOM_LEVEL = 15;
 
@@ -64,13 +74,41 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
-
-        //TODO solve the problem of auto load image and text
-        CircleImageView pictureImageView = view.findViewById(R.id.picture_imageview);
-        pictureImageView.setTransitionName("profile");
-        TextView nameTextView = view.findViewById(R.id.name_textview);
-        nameTextView.setTransitionName("name");
+        initComponents(view);
         return view;
+    }
+
+    private void initComponents(View view) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length);
+        CircleImageView pictureImageView = view.findViewById(R.id.picture_imageview);
+        pictureImageView.setImageBitmap(bitmap);
+
+        TextView nameTextView = view.findViewById(R.id.name_textview);
+        mNameSurnameFormat = mContext.getString(R.string.format_userinfo);
+        nameTextView.setText(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
+
+        TextView funcionTextView = view.findViewById(R.id.function_textview);
+        funcionTextView.setText(mUserTeam.userFunction);
+
+        CircleImageView statusImageView = view.findViewById(R.id.status_imageview);
+        setShiftStatus(mUserTeam.shiftStatus, statusImageView);
+    }
+
+    private void setShiftStatus(int shiftStatusId, CircleImageView imageView) {
+        switch (shiftStatusId) {
+            case 0://Negative
+                imageView.setColorFilter(Color.RED);
+                break;
+            case 1://Positive
+                imageView.setColorFilter(Color.GREEN);
+                break;
+            case 2://Neutral
+                imageView.setColorFilter(Color.GRAY);
+                break;
+            default:
+                imageView.setColorFilter(Color.GRAY);
+                break;
+        }
     }
 
     @Override
@@ -90,6 +128,7 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
         super.onAttach(context);
         if (context instanceof OnUserDetailsFragmentInteractionListener) {
             mListener = (OnUserDetailsFragmentInteractionListener) context;
+            mContext = (AppCompatActivity) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnUserDetailsFragmentInteractionListener");
@@ -105,7 +144,19 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        //TODO start the viewmodel
+        try {
+            LatLng latLngUser = new LatLng(mUserTeam.latitude, mUserTeam.longitude);
+            MarkerOptions riderRequestMarker = new MarkerOptions();
+            riderRequestMarker.position(latLngUser);
+            riderRequestMarker.title(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
+            riderRequestMarker.anchor(0.5f, 0.5f);
+            riderRequestMarker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            mGoogleMap.addMarker(riderRequestMarker);
+            CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(latLngUser, DEFAULT_ZOOM_LEVEL);
+            mGoogleMap.animateCamera(cu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
