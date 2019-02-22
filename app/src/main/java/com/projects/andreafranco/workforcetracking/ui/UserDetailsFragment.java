@@ -1,10 +1,10 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,11 +21,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.UserTeam;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
+import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
 /**
  * create an instance of this fragment.
@@ -33,12 +33,16 @@ import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 public class UserDetailsFragment extends Fragment implements OnMapReadyCallback {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final float DEFAULT_ZOOM_LEVEL = 15;
+
     private UserTeam mUserTeam;
     private GoogleMap mGoogleMap;
     private AppCompatActivity mContext;
     String mNameSurnameFormat;
-
-    private static final float DEFAULT_ZOOM_LEVEL = 15;
+    private TextView mNameTextView;
+    private TextView mFuncionTextView;
+    private CircleImageView mPictureImageView;
+    private CircleImageView mStatusImageView;
 
     private OnUserDetailsFragmentInteractionListener mListener;
 
@@ -79,19 +83,11 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
     }
 
     private void initComponents(View view) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length);
-        CircleImageView pictureImageView = view.findViewById(R.id.picture_imageview);
-        pictureImageView.setImageBitmap(bitmap);
-
-        TextView nameTextView = view.findViewById(R.id.name_textview);
+        mPictureImageView = view.findViewById(R.id.picture_imageview);
+        mNameTextView = view.findViewById(R.id.name_textview);
+        mFuncionTextView = view.findViewById(R.id.function_textview);
+        mStatusImageView = view.findViewById(R.id.status_imageview);
         mNameSurnameFormat = mContext.getString(R.string.format_userinfo);
-        nameTextView.setText(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
-
-        TextView funcionTextView = view.findViewById(R.id.function_textview);
-        funcionTextView.setText(mUserTeam.userFunction);
-
-        CircleImageView statusImageView = view.findViewById(R.id.status_imageview);
-        setShiftStatus(mUserTeam.shiftStatus, statusImageView);
     }
 
     private void setShiftStatus(int shiftStatusId, CircleImageView imageView) {
@@ -109,6 +105,19 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
                 imageView.setColorFilter(Color.GRAY);
                 break;
         }
+    }
+
+    private void subscribeToModel(final UserViewModel model) {
+        model.getObservableUser().observe(getActivity(), userEntity -> {
+            if (userEntity != null) {
+                model.setUser(userEntity);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length);
+                mPictureImageView.setImageBitmap(bitmap);
+                mNameTextView.setText(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
+                mFuncionTextView.setText(mUserTeam.userFunction);
+                setShiftStatus(mUserTeam.shiftStatus, mStatusImageView);
+            }
+        });
     }
 
     @Override
@@ -144,7 +153,18 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+        UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserTeam.id);
+        UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        subscribeToModel(userViewModel);
+        updateMap();
+    }
+
+    /**
+     * Keep the position of the user updated
+     */
+    private void updateMap() {
         try {
+            mGoogleMap.clear();
             LatLng latLngUser = new LatLng(mUserTeam.latitude, mUserTeam.longitude);
             MarkerOptions riderRequestMarker = new MarkerOptions();
             riderRequestMarker.position(latLngUser);
