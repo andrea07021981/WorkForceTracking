@@ -25,19 +25,19 @@ public class DataGenerator {
 
     //Users
     private static final String[] USER_NAME = new String[]{
-            "Andrew", "Andrea", "Pippo", "Lou"};
+            "Name1", "Name2", "Name3", "Name4"};
 
     private static final String[] USER_SURNAME = new String[]{
-            "Frank", "Franco", "Rossi", "Bianchi"};
+            "Name1", "Name2", "Name3", "Name4"};
 
     private static final String[] USER_EMAIL = new String[]{
             "a@aa.com", "a@a.com", "b@a.com", "c@a.com"};
 
     private static final String[] USER_USERNAME = new String[]{
-            "a", "Andrea", "Pippo", "Lou"};
+            "1", "2", "3", "4"};
 
     private static final String[] USER_PSW = new String[]{
-            "a", "andrea", "pippo", "lou"};
+            "1", "2", "3", "4"};
 
     private static final double[] USER_LATITUDE = new double[]{
             46.098354, 46.099998, 46.100921, 46.102089};
