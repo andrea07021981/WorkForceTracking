@@ -54,7 +54,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userstatus_imageView"
             app:layout_constraintStart_toEndOf="@+id/userlogo_imageView"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -63,9 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:textColor="@android:color/white"
                 android:paddingLeft="@dimen/nav_header_vertical_spacing"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/white"
                 android:textStyle="italic" />
 
             <TextView
@@ -79,6 +79,21 @@
                 android:textColor="@android:color/white"
                 android:textStyle="bold|italic" />
         </LinearLayout>
+
+        <com.projects.andreafranco.workforcetracking.ui.component.CircleImageView
+            android:id="@+id/userstatus_imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/circle"
+            android:contentDescription="@string/profile_image"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

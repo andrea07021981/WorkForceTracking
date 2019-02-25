@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_ID;
+import static com.projects.andreafranco.workforcetracking.util.ImageUtils.getShiftStatusColor;
 
 /**
  * create an instance of this fragment.
@@ -50,6 +52,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     private RecyclerView mRecyclerView;
     private TextView mUserInfoTextView;
     private CircleImageView mUserLogoImageView;
+    private CircleImageView mUserStatusImageView;
     private ImageButton mChangeImageImageButton;
     private UserViewModel mUserViewModel;
 
@@ -91,6 +94,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     private void initValues(View view) {
         mUserInfoTextView = view.findViewById(R.id.userinfo_textview);
         mUserLogoImageView = view.findViewById(R.id.userlogo_imageView);
+        mUserStatusImageView = view.findViewById(R.id.userstatus_imageView);
         mChangeImageImageButton = view.findViewById(R.id.changeimage_imagebutton);
         mChangeImageImageButton.setOnClickListener(v -> {
             Intent getPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -119,7 +123,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
 
     private void initRecycleView(View view) {
         mRecyclerView = view.findViewById(R.id.main_recycleview);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         DashBoardRecycleViewAdapter dashBoardRecycleViewAdapter = new DashBoardRecycleViewAdapter(mUserId, getActivity(), this);
         mRecyclerView.setAdapter(dashBoardRecycleViewAdapter);
@@ -135,6 +139,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
             String nameSurnameFormat = getContext().getString(R.string.format_userinfo);
             mUserInfoTextView.setText(String.format(nameSurnameFormat, userEntity.getName(), userEntity.getSurname()));
             mUserLogoImageView.setImageBitmap(BitmapFactory.decodeByteArray(userEntity.getImage(), 0, userEntity.getImage().length));
+            mUserStatusImageView.setColorFilter(getShiftStatusColor(userEntity.getShiftid()));
         });
     }
 

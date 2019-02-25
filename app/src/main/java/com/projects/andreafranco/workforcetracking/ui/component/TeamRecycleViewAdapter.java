@@ -19,6 +19,8 @@ import com.projects.andreafranco.workforcetracking.util.GeoUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.projects.andreafranco.workforcetracking.util.ImageUtils.getShiftStatusColor;
+
 public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleViewAdapter.TeamViewHolder> {
     private List<UserTeam> mUserTeamList;
     private Context mContext;
@@ -78,7 +80,7 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
         public void bindTeamVierwHolder(UserTeam userTeam) {
             mUserTeam = userTeam;
             mPictureImageVIew.setImageBitmap(BitmapFactory.decodeByteArray(mUserTeam.image, 0, mUserTeam.image.length));
-            setShiftStatus(userTeam.shiftStatus);
+            mStatusImageVIew.setColorFilter(getShiftStatusColor(userTeam.shiftStatus));
             String nameSurnameFormat = mContext.getString(R.string.format_userinfo);
             mNameTextView.setText(String.format(nameSurnameFormat, userTeam.name, userTeam.surname));
             mFunctionTextView.setText(userTeam.userFunction);
@@ -92,23 +94,6 @@ public class TeamRecycleViewAdapter extends RecyclerView.Adapter<TeamRecycleView
                     longitude,
                     mContext,
                     new GeocoderHandler(this));
-        }
-
-        private void setShiftStatus(int shiftStatusId) {
-            switch (shiftStatusId) {
-                case 0://Negative
-                    mStatusImageVIew.setColorFilter(Color.RED);
-                    break;
-                case 1://Positive
-                    mStatusImageVIew.setColorFilter(Color.GREEN);
-                    break;
-                case 2://Neutral
-                    mStatusImageVIew.setColorFilter(Color.GRAY);
-                    break;
-                default:
-                    mStatusImageVIew.setColorFilter(Color.GRAY);
-                    break;
-            }
         }
 
         @Override

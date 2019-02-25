@@ -9,11 +9,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.projects.andreafranco.workforcetracking.R;
 import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
-import com.projects.andreafranco.workforcetracking.ui.DashBoardFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +20,7 @@ import java.util.List;
 public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardRecycleViewAdapter.DashBoardViewHolder> {
     private final int mUserId;
     private final Context mContext;
-    private List<DashboardFunction> mImageList;
+    private List<DashboardFunction> mFunctionList;
     private OnItemInteractionListener mListener;
 
     public DashBoardRecycleViewAdapter(int userId, Context context, Fragment fragment) {
@@ -30,8 +28,8 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
         mContext = context;
         //TODO, based on user type (Team leader or others) we'll have differents home pages. Now, we set it up with fixed images
         //TODO every item will become a fragment and it will be set it up on every xml with class...
-        mImageList = new ArrayList<DashboardFunction>();
-        mImageList.addAll(Arrays.asList(
+        mFunctionList = new ArrayList<DashboardFunction>();
+        mFunctionList.addAll(Arrays.asList(
                 new DashboardFunction(DashboardFunction.FUNCTION_TEAM),
                 new DashboardFunction(DashboardFunction.FUNCTION_CALENDAR),
                 new DashboardFunction(DashboardFunction.FUNCTION_MATERIAL)));
@@ -50,19 +48,19 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
     @Override
     public void onBindViewHolder(DashBoardViewHolder holder, int position) {
-        DashboardFunction dashboardFunction = mImageList.get(position);
+        DashboardFunction dashboardFunction = mFunctionList.get(position);
         holder.bindFunction(dashboardFunction);
     }
 
     @Override
     public int getItemCount() {
-        return mImageList.size();
+        return mFunctionList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
         //Retur type based on position
-        return mImageList.get(position).getFunctionType();
+        return mFunctionList.get(position).getFunctionType();
     }
 
     @NonNull
@@ -97,8 +95,8 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
      * Clears all items from the data set.
      */
     public void clear(){
-        if(mImageList != null){
-            mImageList.clear();
+        if(mFunctionList != null){
+            mFunctionList.clear();
             notifyDataSetChanged();
         }
     }
@@ -108,10 +106,10 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
      * @param items The item array to be added.
      */
     public void addAll(List<DashboardFunction> items){
-        if(mImageList == null){
-            mImageList = new ArrayList<>();
+        if(mFunctionList == null){
+            mFunctionList = new ArrayList<>();
         }
-        mImageList.addAll(items);
+        mFunctionList.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -136,10 +134,8 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
                     layoutParams = new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.setMargins(0,0,0, 5);
                     //Expand the item
-                    //layoutParams.setFullSpan(true);
+                    layoutParams.setFullSpan(true);
                     mLayout.setLayoutParams(layoutParams);
-                    Button manageTeamButton = mLayout.findViewById(R.id.mangeteam_button);
-                    manageTeamButton.setOnClickListener(v -> mListener.onItemSelected(function));
                     break;
 
                 case DashboardFunction.FUNCTION_CALENDAR:
@@ -162,9 +158,9 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
         @Override
         public void onClick(View v) {
-            switch (mImageList.get(getAdapterPosition()).getFunctionType()) {
+            switch (mFunctionList.get(getAdapterPosition()).getFunctionType()) {
                 case DashboardFunction.FUNCTION_TEAM:
-
+                    mListener.onItemSelected(mFunctionList.get(getAdapterPosition()));
                     break;
 
                 case DashboardFunction.FUNCTION_CALENDAR:

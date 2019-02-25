@@ -27,6 +27,8 @@ import com.projects.andreafranco.workforcetracking.model.UserTeam;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
+import static com.projects.andreafranco.workforcetracking.util.ImageUtils.getShiftStatusColor;
+
 /**
  * create an instance of this fragment.
  */
@@ -90,23 +92,6 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
         mNameSurnameFormat = mContext.getString(R.string.format_userinfo);
     }
 
-    private void setShiftStatus(int shiftStatusId, CircleImageView imageView) {
-        switch (shiftStatusId) {
-            case 0://Negative
-                imageView.setColorFilter(Color.RED);
-                break;
-            case 1://Positive
-                imageView.setColorFilter(Color.GREEN);
-                break;
-            case 2://Neutral
-                imageView.setColorFilter(Color.GRAY);
-                break;
-            default:
-                imageView.setColorFilter(Color.GRAY);
-                break;
-        }
-    }
-
     private void subscribeToModel(final UserViewModel model) {
         model.getObservableUser().observe(getActivity(), userEntity -> {
             if (userEntity != null) {
@@ -115,7 +100,7 @@ public class UserDetailsFragment extends Fragment implements OnMapReadyCallback 
                 mPictureImageView.setImageBitmap(bitmap);
                 mNameTextView.setText(String.format(mNameSurnameFormat, mUserTeam.name, mUserTeam.surname));
                 mFuncionTextView.setText(mUserTeam.userFunction);
-                setShiftStatus(mUserTeam.shiftStatus, mStatusImageView);
+                mStatusImageView.setColorFilter(getShiftStatusColor(mUserTeam.shiftStatus));
 
                 //Locate last user position
                 updateMap();

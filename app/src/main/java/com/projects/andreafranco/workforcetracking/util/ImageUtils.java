@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 
 import java.io.ByteArrayOutputStream;
 
+import static android.graphics.Color.GRAY;
+
 public class ImageUtils {
 
     public static Bitmap getCustomBitmap(int width, int height, Bitmap image, String name, String surname) {
@@ -56,5 +58,24 @@ public class ImageUtils {
     public static byte[] convertBitmapToByte(Bitmap bitmap) {
         ByteArrayOutputStream output= new ByteArrayOutputStream(); bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
         return output.toByteArray();
+    }
+
+    public static int getShiftStatusColor(int shiftStatusId) {
+        int color = GRAY;
+        switch (shiftStatusId) {
+            case 0://Negative
+                color = Color.RED;
+                break;
+            case 1://Positive
+                color = Color.GREEN;
+                break;
+            case 2://Neutral
+                color = Color.DKGRAY;
+                break;
+            default:
+                color = Color.BLACK;
+                break;
+        }
+        return color;
     }
 }

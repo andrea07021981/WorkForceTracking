@@ -22,33 +22,10 @@
         <ImageView
             android:src="@drawable/calendar"
             android:id="@+id/info_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"/>
-
-        <TextView
-            android:text="Scheduled: 3"
-            android:id="@+id/activeusers_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_vertical_padding" />
-
-        <TextView
-            android:text="No scheduled: 1"
-            android:id="@+id/pauseusers_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_vertical_padding" />
-
-        <TextView
-            android:text="Closed: 0"
-            android:id="@+id/inactiveusers_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_vertical_padding" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
