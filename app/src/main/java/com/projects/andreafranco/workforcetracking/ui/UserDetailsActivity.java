@@ -29,6 +29,8 @@ public class UserDetailsActivity extends SingleFragmentActivity implements UserD
     }
 
     public void onBackPressed() {
+        //This allows the previous activity to animate the shared components.
+        //Prev activity must have windowContentTransitions = "true"
         ActivityCompat.finishAfterTransition(this);
     }
 

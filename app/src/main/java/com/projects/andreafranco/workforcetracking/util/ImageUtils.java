@@ -14,7 +14,11 @@ public class ImageUtils {
 
     public static Bitmap getCustomBitmap(int width, int height, Bitmap image, String name, String surname) {
         //We are assuming that the whole image has the same color, so we can extract a fixed position
-        int pixel = image.getPixel(0, 0);
+        //TODO fixed value only for datagenerator mode active
+        int pixel = 5176198;
+        if (image != null) {
+            pixel = image.getPixel(0, 0);
+        }
         int r = Color.red(pixel);
         int g = Color.green(pixel);
         int b = Color.blue(pixel);

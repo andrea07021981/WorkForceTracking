@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -29,6 +30,7 @@ import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
+import com.projects.andreafranco.workforcetracking.ui.component.ShakingView;
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
 import com.projects.andreafranco.workforcetracking.util.ImageUtils;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
@@ -55,6 +57,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     private CircleImageView mUserStatusImageView;
     private ImageButton mChangeImageImageButton;
     private UserViewModel mUserViewModel;
+    private ShakingView mNotificationShakingView, mMessageShakingView, mWarningShakingView;
 
     public DashBoardFragment() {
         // Required empty public constructor
@@ -104,6 +107,18 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
         UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
         mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
         subscribeToModel(mUserViewModel);
+
+        mNotificationShakingView = (ShakingView) view.findViewById(R.id.notification_sharingview);
+        mMessageShakingView = (ShakingView) view.findViewById(R.id.message_sharingview);
+        mWarningShakingView = (ShakingView) view.findViewById(R.id.warning_sharingview);
+
+        //TODO Simpletest for animation notification
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            mNotificationShakingView.shake(1);
+            mMessageShakingView.shake(4);
+            mWarningShakingView.shake(6);
+        }, 2000);
 
         //TODO add item click on custom adapter.viewholder
         //TODO move this helper to the next list of users in the team

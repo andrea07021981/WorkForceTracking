@@ -29,7 +29,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            android:layout_gravity=""
             app:cardElevation="20dp"
             android:background="#ffffff"
             >
@@ -43,14 +42,14 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/activity_margin_8"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@drawable/circle"
                     android:padding="@dimen/activity_margin_8"
                     android:transitionName="profile"
                     app:civ_border_color="@color/colorPrimaryDark"
                     app:civ_border_overlay="true"
-                    app:civ_border_width="2dp" />
+                    app:civ_border_width="2dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/name_textview"
