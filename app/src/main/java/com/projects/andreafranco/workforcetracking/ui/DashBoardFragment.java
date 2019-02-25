@@ -180,7 +180,6 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGES && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
-            //CHANGE dimension and setting
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
                 byte[] imageBytes = ImageUtils.convertBitmapToByte(bitmap);
