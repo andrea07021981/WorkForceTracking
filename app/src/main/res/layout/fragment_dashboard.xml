@@ -24,14 +24,16 @@
             android:id="@+id/userlogo_imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/circle"
             android:contentDescription="@string/profile_image"
-            app:civ_border_width="2dp"
+            android:transitionName="team_management_transition"
             app:civ_border_color="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/notification_linearlayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:transitionName="team_management_transition"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/changeimage_imagebutton"
@@ -40,8 +42,8 @@
             android:background="@color/fui_transparent"
             android:paddingLeft="@dimen/activity_vertical_padding_24"
             android:paddingTop="@dimen/activity_vertical_padding_24"
-            android:src="@drawable/edit"
             android:scaleType="center"
+            android:src="@drawable/edit"
             app:layout_constraintBottom_toBottomOf="@id/userlogo_imageView"
             app:layout_constraintEnd_toEndOf="@id/userlogo_imageView" />
 
@@ -53,7 +55,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/notification_linearlayout"
             app:layout_constraintEnd_toStartOf="@+id/userstatus_imageView"
             app:layout_constraintStart_toEndOf="@+id/userlogo_imageView"
             app:layout_constraintTop_toTopOf="parent">
@@ -91,9 +93,88 @@
             android:contentDescription="@string/profile_image"
             app:civ_border_color="@android:color/white"
             app:civ_border_width="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/notification_linearlayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/notification_linearlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_alignBottom="@+id/header_layout"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/notification_imagebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_notification"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="@dimen/activity_margin_8"
+                android:layout_marginLeft="@dimen/activity_margin_8"/>
+
+            <TextView
+                android:id="@+id/notification_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:textColor="@android:color/white"
+                android:layout_marginRight="@dimen/activity_margin_4"
+                android:layout_alignEnd="@id/notification_imagebutton"/>
+
+            <ImageButton
+                android:id="@+id/messages_imagebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_messages"
+                android:background="@android:color/transparent"
+                android:layout_toEndOf="@+id/notification_imagebutton"
+                android:layout_marginRight="@dimen/activity_margin_8"
+                android:layout_marginLeft="@dimen/activity_margin_8"/>
+
+            <TextView
+                android:id="@+id/messages_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:textColor="@android:color/white"
+                android:layout_marginRight="@dimen/activity_margin_4"
+                android:layout_alignEnd="@id/messages_imagebutton"/>
+
+            <ImageButton
+                android:id="@+id/warnings_imagebutton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_warning"
+                android:background="@android:color/transparent"
+                android:layout_toEndOf="@+id/messages_imagebutton"
+                android:layout_marginRight="@dimen/activity_margin_8"
+                android:layout_marginLeft="@dimen/activity_margin_8"/>
+
+            <TextView
+                android:id="@+id/warnings_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:textColor="@android:color/white"
+                android:layout_marginRight="@dimen/activity_margin_4"
+                android:layout_alignEnd="@id/warnings_imagebutton"/>
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 
