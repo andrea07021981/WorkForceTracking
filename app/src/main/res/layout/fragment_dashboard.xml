@@ -34,6 +34,7 @@
             android:transitionName="team_management_transition"/>
 
         <ImageButton
+            android:id="@+id/changeimage_imagebutton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@color/fui_transparent"

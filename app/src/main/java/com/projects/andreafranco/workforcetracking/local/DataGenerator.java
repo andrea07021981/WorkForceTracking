@@ -2,11 +2,6 @@ package com.projects.andreafranco.workforcetracking.local;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 
 import com.projects.andreafranco.workforcetracking.local.entity.FunctionEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.ShiftEntity;
@@ -14,12 +9,12 @@ import com.projects.andreafranco.workforcetracking.local.entity.TeamEntity;
 import com.projects.andreafranco.workforcetracking.local.entity.UserEntity;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
+import static com.projects.andreafranco.workforcetracking.util.ImageUtils.convertBitmapToByte;
+import static com.projects.andreafranco.workforcetracking.util.ImageUtils.getCustomBitmap;
 
 public class DataGenerator {
 
@@ -73,8 +68,8 @@ public class DataGenerator {
         List<UserEntity> users = new ArrayList<>();
         int id = 1;
         for (int i = 0; i < USER_NAME.length; i++) {
-            Bitmap bitmap = createCustomBitmap(200, 200, new CircleImageView(context).getBitmap(), USER_NAME[i],USER_SURNAME[i]);
-            byte[] imageData = bitmapAsByteArray(bitmap);
+            Bitmap bitmap = getCustomBitmap(200, 200, new CircleImageView(context).getBitmap(), USER_NAME[i],USER_SURNAME[i]);
+            byte[] imageData = convertBitmapToByte(bitmap);
             UserEntity user = new UserEntity(
                     id,
                     USER_NAME[i],
@@ -133,62 +128,5 @@ public class DataGenerator {
             id++;
         }
         return functions;
-    }
-
-    /**
-     * TODO these classes will be removed as soos as we get data from WS
-     * @param width
-     * @param height
-     * @param image
-     * @param name
-     * @param surname
-     * @return
-     */
-    private static Bitmap createCustomBitmap(int width, int height, Bitmap image, String name, String surname) {
-        //We are assuming that the whole image has the same color, so we can extract a fixed position
-        int pixel = 5176198;
-        int r = Color.red(pixel);
-        int g = Color.green(pixel);
-        int b = Color.blue(pixel);
-        int circleBackgroundColor = Color.rgb(r, g, b);
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setColor(circleBackgroundColor);
-        canvas.drawRect(0F, 0F, (float) width, (float) height, paint);
-
-        //Set the text
-        Paint paintText = new Paint();
-        paintText.setColor(getContrastColor(circleBackgroundColor));
-        paintText.setTextSize(100);
-        paintText.setTypeface(Typeface.create("Arial", Typeface.BOLD));
-        paintText.setTextAlign(Paint.Align.CENTER);
-        int xPos = (canvas.getWidth() / 2);
-        int yPos = (int) ((canvas.getHeight() / 2) - ((paintText.descent() + paintText.ascent()) / 2)) ;
-        canvas.drawText(name.subSequence(0, 1).toString().toUpperCase() + surname.subSequence(0, 1).toString().toUpperCase(),
-                xPos,
-                yPos,
-                paintText);
-        return bitmap;
-    }
-
-    private static int getContrastColor(int color) {
-        // get existing colors
-        int alpha = Color.alpha(color);
-        int red = Color.red(color);
-        int blue = Color.blue(color);
-        int green = Color.green(color);
-
-        // find compliments
-        red = (~red) & 0xff;
-        blue = (~blue) & 0xff;
-        green = (~green) & 0xff;
-
-        return Color.argb(alpha, red, green, blue);
-    }
-
-    private static byte[] bitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream output= new ByteArrayOutputStream(); bitmap.compress(Bitmap.CompressFormat.PNG, 0, output);
-        return output.toByteArray();
     }
 }

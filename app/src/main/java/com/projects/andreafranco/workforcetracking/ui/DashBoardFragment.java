@@ -1,11 +1,15 @@
 package com.projects.andreafranco.workforcetracking.ui;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -16,6 +20,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.projects.andreafranco.workforcetracking.R;
@@ -24,8 +29,12 @@ import com.projects.andreafranco.workforcetracking.model.DashboardFunction;
 import com.projects.andreafranco.workforcetracking.ui.component.CircleImageView;
 import com.projects.andreafranco.workforcetracking.ui.component.DashBoardRecycleViewAdapter;
 import com.projects.andreafranco.workforcetracking.ui.component.SpacesItemDecoration;
+import com.projects.andreafranco.workforcetracking.util.ImageUtils;
 import com.projects.andreafranco.workforcetracking.viewmodel.UserViewModel;
 
+import java.io.IOException;
+
+import static android.app.Activity.RESULT_OK;
 import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_ID;
 
 /**
@@ -33,12 +42,16 @@ import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_
  */
 public class DashBoardFragment extends Fragment implements DashBoardRecycleViewAdapter.OnItemInteractionListener {
     private static final String ARG_PARAM1 = "param1";
+    private static final int REQUEST_IMAGES = 1;
+
     private int mUserId;
 
     private OnDashBoardFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private TextView mUserInfoTextView;
     private CircleImageView mUserLogoImageView;
+    private ImageButton mChangeImageImageButton;
+    private UserViewModel mUserViewModel;
 
     public DashBoardFragment() {
         // Required empty public constructor
@@ -78,9 +91,14 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
     private void initValues(View view) {
         mUserInfoTextView = view.findViewById(R.id.userinfo_textview);
         mUserLogoImageView = view.findViewById(R.id.userlogo_imageView);
+        mChangeImageImageButton = view.findViewById(R.id.changeimage_imagebutton);
+        mChangeImageImageButton.setOnClickListener(v -> {
+            Intent getPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(getPhotoIntent, REQUEST_IMAGES);
+        });
         initRecycleView(view);
         UserViewModel.Factory factory = new UserViewModel.Factory(getActivity().getApplication(), mUserId);
-        UserViewModel mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+        mUserViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
         subscribeToModel(mUserViewModel);
 
         //TODO add item click on custom adapter.viewholder
@@ -156,6 +174,27 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGES && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            //CHANGE dimension and setting
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                byte[] imageBytes = ImageUtils.convertBitmapToByte(bitmap);
+                LiveData<UserEntity> observableUser = mUserViewModel.getObservableUser();
+                UserEntity userToUpdate = observableUser.getValue();
+                if (userToUpdate != null) {
+                    userToUpdate.setImage(imageBytes);
+                    mUserViewModel.updateUser(userToUpdate);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public interface OnDashBoardFragmentInteractionListener {

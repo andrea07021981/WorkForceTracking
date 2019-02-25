@@ -63,10 +63,15 @@ public class DataRepository {
         return mDatabase.userTeamDao().getTeamOfUser(teamid, userID);
     }
 
-    public void insertUser(UserEntity userEntity)
-    {
+    public void insertUser(UserEntity userEntity) {
         mExecutors.diskIO().execute(()-> {
             mDatabase.userDao().insertUser(userEntity);
+        });
+    }
+
+    public void updateUser(UserEntity userEntity) {
+        mExecutors.diskIO().execute(() -> {
+            mDatabase.userDao().updateUser(userEntity);
         });
     }
 }

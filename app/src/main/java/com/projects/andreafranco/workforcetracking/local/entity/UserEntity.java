@@ -166,6 +166,10 @@ public class UserEntity implements User {
         return image;
     }
 
+    public void setImage(@NonNull byte[] image) {
+        this.image = image;
+    }
+
     public void setEmail(@NonNull String email) {
         this.email = email;
     }
