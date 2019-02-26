@@ -27,6 +27,8 @@ public class GeoUtils {
             public void run() {
                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                 Address address = null;
+                Message message = Message.obtain();
+                message.setTarget(handler);
                 try {
                     List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
                     if (addressList != null && addressList.size() > 0) {
@@ -34,8 +36,11 @@ public class GeoUtils {
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "Unable connect to Geocoder", e);
+                    message.what = 1;
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("address", null);
+                    message.setData(bundle);
                 } finally {
-                    Message message = Message.obtain();
                     message.setTarget(handler);
                     if (address != null) {
                         message.what = 1;
@@ -49,8 +54,8 @@ public class GeoUtils {
                         message.setData(bundle);
                     }
 
-                    message.sendToTarget();
                 }
+                message.sendToTarget();
             }
         };
         thread.start();

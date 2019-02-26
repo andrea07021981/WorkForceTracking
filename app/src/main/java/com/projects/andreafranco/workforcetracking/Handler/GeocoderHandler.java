@@ -37,11 +37,13 @@ public class GeocoderHandler extends Handler {
             case 1:
                 Bundle bundle = message.getData();
                 Address originAddress = bundle.getParcelable("address");
-                formattedAddress = getFormattedAddress(Objects.requireNonNull(originAddress));
-                Log.e("location Address=", originAddress.getLocality());
-                RecyclerView.ViewHolder viewHolder = mCaller.get();
-                if (viewHolder instanceof TeamRecycleViewAdapter.TeamViewHolder) {
-                    mListener.handleAddress(formattedAddress);
+                if (originAddress != null) {
+                    formattedAddress = getFormattedAddress(originAddress);
+                    Log.e("location Address=", originAddress.getLocality());
+                    RecyclerView.ViewHolder viewHolder = mCaller.get();
+                    if (viewHolder instanceof TeamRecycleViewAdapter.TeamViewHolder) {
+                        mListener.handleAddress(formattedAddress);
+                    }
                 }
                 break;
             default:
