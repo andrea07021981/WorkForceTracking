@@ -14,21 +14,19 @@ public class CircleInfoView extends View {
     private static final int RED = 0xFFD72D77;
     private static final int WHITE = 0xFFFFFFFF;
 
-    private Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint circlePaint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private int textPaintBaseLine;
-    private Rect targetRect;
+    private Paint mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint mCirclePaint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private int mTextPaintBaseLine;
+    private Rect mTargetRect;
 
-    private float circleRadiusProgress = 0f;
+    private int mMaxCircleSize;
 
-    private int maxCircleSize;
+    private Bitmap mTempBitmap;
+    private Canvas mTempCanvas;
 
-    private Bitmap tempBitmap;
-    private Canvas tempCanvas;
+    private String mMessage = "1";
 
-    private String message = "1";
-
-    private Paint textPaint;
+    private Paint mTextPaint;
 
     public CircleInfoView(Context context) {
         this(context, null);
@@ -44,50 +42,50 @@ public class CircleInfoView extends View {
     }
 
     private void init () {
-        circlePaint.setStyle(Paint.Style.FILL);
-        circlePaint.setColor(RED);
+        mCirclePaint.setStyle(Paint.Style.FILL);
+        mCirclePaint.setColor(RED);
 
-        circlePaint2.setStyle(Paint.Style.STROKE);
-        circlePaint2.setStrokeWidth(2);
-        circlePaint2.setColor(WHITE);
+        mCirclePaint2.setStyle(Paint.Style.STROKE);
+        mCirclePaint2.setStrokeWidth(2);
+        mCirclePaint2.setColor(WHITE);
 
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        maxCircleSize = w / 2;
-        tempBitmap = Bitmap.createBitmap(getWidth(), getWidth(), Bitmap.Config.ARGB_8888);
-        tempCanvas = new Canvas(tempBitmap);
+        mMaxCircleSize = w / 2;
+        mTempBitmap = Bitmap.createBitmap(getWidth(), getWidth(), Bitmap.Config.ARGB_8888);
+        mTempCanvas = new Canvas(mTempBitmap);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        tempCanvas.drawCircle(maxCircleSize, maxCircleSize, maxCircleSize - 4, circlePaint);
+        mTempCanvas.drawCircle(mMaxCircleSize, mMaxCircleSize, mMaxCircleSize - 4, mCirclePaint);
 
 
-        tempCanvas.drawCircle(maxCircleSize, maxCircleSize, maxCircleSize - 4, circlePaint2);
+        mTempCanvas.drawCircle(mMaxCircleSize, mMaxCircleSize, mMaxCircleSize - 4, mCirclePaint2);
 
-        textPaint = new TextPaint();
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setColor(WHITE);
-        textPaint.setTextSize(maxCircleSize*8/5);
-        Paint.FontMetricsInt fontMetricsInt = textPaint.getFontMetricsInt();
-        targetRect = new Rect(0, 0, 2*maxCircleSize,2*maxCircleSize);
-        textPaintBaseLine = (targetRect.bottom + targetRect.top - fontMetricsInt.bottom - fontMetricsInt.top) / 2;
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        tempCanvas.drawText(""+message, targetRect.centerX(), textPaintBaseLine, textPaint);
+        mTextPaint = new TextPaint();
+        mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setColor(WHITE);
+        mTextPaint.setTextSize(mMaxCircleSize *8/5);
+        Paint.FontMetricsInt fontMetricsInt = mTextPaint.getFontMetricsInt();
+        mTargetRect = new Rect(0, 0, 2* mMaxCircleSize,2* mMaxCircleSize);
+        mTextPaintBaseLine = (mTargetRect.bottom + mTargetRect.top - fontMetricsInt.bottom - fontMetricsInt.top) / 2;
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTempCanvas.drawText(""+ mMessage, mTargetRect.centerX(), mTextPaintBaseLine, mTextPaint);
 
-        canvas.drawBitmap(tempBitmap, 0, 0, null);
+        canvas.drawBitmap(mTempBitmap, 0, 0, null);
 
     }
 
     public void setMessageNum (int messageNum) {
         if (messageNum > 0 && messageNum < 10) {
-            message = messageNum+"";
+            mMessage = messageNum+"";
         } else {
-            message = "∵";
+            mMessage = "∵";
         }
         invalidate();
     }

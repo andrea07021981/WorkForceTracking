@@ -17,10 +17,10 @@ import com.projects.andreafranco.workforcetracking.R;
 
 public class ShakingView extends FrameLayout {
 
-    private CircleInfoView circleView;
-    ImageView imageView;
-    Animation masterAnimation, animation2;
-    ValueAnimator infoAnimation;
+    private CircleInfoView mCircleView;
+    ImageView mImageView;
+    Animation mMasterAnimation;
+    ValueAnimator mInfoAnimation;
 
     public ShakingView(Context context) {
         this(context, null);
@@ -43,26 +43,26 @@ public class ShakingView extends FrameLayout {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(getContext()).inflate(R.layout.shaking_view, this, true);
-        imageView = (ImageView) findViewById(R.id.shake_imageview);
-        circleView = (CircleInfoView) findViewById(R.id.info_circleinfoview);
+        mImageView = (ImageView) findViewById(R.id.shake_imageview);
+        mCircleView = (CircleInfoView) findViewById(R.id.info_circleinfoview);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ShakingView, defStyleAttr, 0);
 
-        imageView.setImageDrawable(context.getDrawable(a.getResourceId(R.styleable.ShakingView_ski_src, -1)));
+        mImageView.setImageDrawable(context.getDrawable(a.getResourceId(R.styleable.ShakingView_ski_src, -1)));
 
-        masterAnimation = new RotateAnimation(0, -20, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.3f);
-        masterAnimation.setInterpolator(new SpringInterpolator());
-        masterAnimation.setDuration(500);
+        mMasterAnimation = new RotateAnimation(0, -20, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.3f);
+        mMasterAnimation.setInterpolator(new SpringInterpolator());
+        mMasterAnimation.setDuration(500);
 
-        infoAnimation = ValueAnimator.ofFloat(1);
-        infoAnimation.setDuration(300);
-        infoAnimation.setInterpolator(new OvershootInterpolator());
-        infoAnimation.setStartDelay(300);
-        infoAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        mInfoAnimation = ValueAnimator.ofFloat(1);
+        mInfoAnimation.setDuration(300);
+        mInfoAnimation.setInterpolator(new OvershootInterpolator());
+        mInfoAnimation.setStartDelay(300);
+        mInfoAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                circleView.setScaleX((Float) animation.getAnimatedValue());
-                circleView.setScaleY((Float) animation.getAnimatedValue());
+                mCircleView.setScaleX((Float) animation.getAnimatedValue());
+                mCircleView.setScaleY((Float) animation.getAnimatedValue());
             }
         });
     }
@@ -70,8 +70,8 @@ public class ShakingView extends FrameLayout {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void shake (int i) {
-        imageView.startAnimation(masterAnimation);
-        circleView.setMessageNum(i);
-        infoAnimation.start();
+        mImageView.startAnimation(mMasterAnimation);
+        mCircleView.setMessageNum(i);
+        mInfoAnimation.start();
     }
 }
