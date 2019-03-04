@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -39,6 +40,7 @@ import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static com.projects.andreafranco.workforcetracking.ui.LoginFragment.USER_ID;
+import static com.projects.andreafranco.workforcetracking.ui.UserListFragment.USER_TEAM;
 import static com.projects.andreafranco.workforcetracking.util.ImageUtils.getShiftStatusColor;
 
 /**
@@ -112,7 +114,7 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
         mMessageShakingView = (ShakingView) view.findViewById(R.id.message_sharingview);
         mWarningShakingView = (ShakingView) view.findViewById(R.id.warning_sharingview);
 
-        //TODO Simpletest for animation notification
+        //TODO Simple test for animation notification
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             mNotificationShakingView.shake(1);
@@ -186,6 +188,15 @@ public class DashBoardFragment extends Fragment implements DashBoardRecycleViewA
                 break;
 
             case DashboardFunction.FUNCTION_CALENDAR:
+                Pair<View, String> p1 = Pair.create(mUserLogoImageView, "profile");
+                Pair<View, String> p2 = Pair.create(mUserInfoTextView, "name");
+                Intent intentCal = new Intent(getActivity(), CalendarActivity.class);
+                Bundle args = new Bundle();
+                args.putInt(USER_TEAM, mUserId);
+                intentCal.putExtras(args);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(getActivity(), p1, p2);
+                startActivity(intentCal, options.toBundle());
                 break;
 
             case DashboardFunction.FUNCTION_MATERIAL:

@@ -28,7 +28,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/circle"
             android:contentDescription="@string/profile_image"
-            android:transitionName="team_management_transition"
+            android:transitionName="profile"
             app:civ_border_color="@android:color/white"
             app:civ_border_width="2dp"
             app:layout_constraintBottom_toTopOf="@+id/notification_linearlayout"
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="@dimen/nav_header_vertical_spacing"
+                android:transitionName="name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/white"
                 android:textStyle="italic" />

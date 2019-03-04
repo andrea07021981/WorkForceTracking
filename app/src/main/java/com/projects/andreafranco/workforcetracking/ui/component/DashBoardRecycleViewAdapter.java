@@ -158,21 +158,7 @@ public class DashBoardRecycleViewAdapter extends RecyclerView.Adapter<DashBoardR
 
         @Override
         public void onClick(View v) {
-            switch (mFunctionList.get(getAdapterPosition()).getFunctionType()) {
-                case DashboardFunction.FUNCTION_TEAM:
-                    mListener.onItemSelected(mFunctionList.get(getAdapterPosition()));
-                    break;
-
-                case DashboardFunction.FUNCTION_CALENDAR:
-
-                    break;
-
-                case DashboardFunction.FUNCTION_MATERIAL:
-                    break;
-
-                default:
-                    break;
-            }
+            mListener.onItemSelected(mFunctionList.get(getAdapterPosition()));
         }
     }
 }
